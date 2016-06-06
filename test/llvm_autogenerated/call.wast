@@ -10,6 +10,7 @@
   (type $FUNCSIG$iii (func (param i32 i32) (result i32)))
   (type $FUNCSIG$ii (func (param i32) (result i32)))
   (type $FUNCSIG$j (func (result i64)))
+  (type $7 (func (param i32)))
   (import $double_nullary "env" "double_nullary" (result f64))
   (import $float_nullary "env" "float_nullary" (result f32))
   (import $i32_binary "env" "i32_binary" (param i32 i32) (result i32))
@@ -29,38 +30,38 @@
   (export "tail_call_void_nullary" $tail_call_void_nullary)
   (export "fastcc_tail_call_void_nullary" $fastcc_tail_call_void_nullary)
   (export "coldcc_tail_call_void_nullary" $coldcc_tail_call_void_nullary)
-  (func $call_i32_nullary (result i32)
+  (func $call_i32_nullary (type $FUNCSIG$i) (result i32)
     (return
       (call_import $i32_nullary)
     )
   )
-  (func $call_i64_nullary (result i64)
+  (func $call_i64_nullary (type $FUNCSIG$j) (result i64)
     (return
       (call_import $i64_nullary)
     )
   )
-  (func $call_float_nullary (result f32)
+  (func $call_float_nullary (type $FUNCSIG$f) (result f32)
     (return
       (call_import $float_nullary)
     )
   )
-  (func $call_double_nullary (result f64)
+  (func $call_double_nullary (type $FUNCSIG$d) (result f64)
     (return
       (call_import $double_nullary)
     )
   )
-  (func $call_void_nullary
+  (func $call_void_nullary (type $FUNCSIG$v)
     (call_import $void_nullary)
     (return)
   )
-  (func $call_i32_unary (param $0 i32) (result i32)
+  (func $call_i32_unary (type $FUNCSIG$ii) (param $0 i32) (result i32)
     (return
       (call_import $i32_unary
         (get_local $0)
       )
     )
   )
-  (func $call_i32_binary (param $0 i32) (param $1 i32) (result i32)
+  (func $call_i32_binary (type $FUNCSIG$iii) (param $0 i32) (param $1 i32) (result i32)
     (return
       (call_import $i32_binary
         (get_local $0)
@@ -68,28 +69,28 @@
       )
     )
   )
-  (func $call_indirect_void (param $0 i32)
+  (func $call_indirect_void (type $7) (param $0 i32)
     (call_indirect $FUNCSIG$v
       (get_local $0)
     )
     (return)
   )
-  (func $call_indirect_i32 (param $0 i32) (result i32)
+  (func $call_indirect_i32 (type $FUNCSIG$ii) (param $0 i32) (result i32)
     (return
       (call_indirect $FUNCSIG$i
         (get_local $0)
       )
     )
   )
-  (func $tail_call_void_nullary
+  (func $tail_call_void_nullary (type $FUNCSIG$v)
     (call_import $void_nullary)
     (return)
   )
-  (func $fastcc_tail_call_void_nullary
+  (func $fastcc_tail_call_void_nullary (type $FUNCSIG$v)
     (call_import $void_nullary)
     (return)
   )
-  (func $coldcc_tail_call_void_nullary
+  (func $coldcc_tail_call_void_nullary (type $FUNCSIG$v)
     (call_import $void_nullary)
     (return)
   )

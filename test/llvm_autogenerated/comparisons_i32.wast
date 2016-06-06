@@ -3,6 +3,7 @@
     (segment 4 "\10\04\00\00")
   )
   (export "memory" memory)
+  (type $0 (func (param i32 i32) (result i32)))
   (export "eq_i32" $eq_i32)
   (export "ne_i32" $ne_i32)
   (export "slt_i32" $slt_i32)
@@ -13,7 +14,7 @@
   (export "sge_i32" $sge_i32)
   (export "ugt_i32" $ugt_i32)
   (export "uge_i32" $uge_i32)
-  (func $eq_i32 (param $0 i32) (param $1 i32) (result i32)
+  (func $eq_i32 (type $0) (param $0 i32) (param $1 i32) (result i32)
     (return
       (i32.eq
         (get_local $0)
@@ -21,7 +22,7 @@
       )
     )
   )
-  (func $ne_i32 (param $0 i32) (param $1 i32) (result i32)
+  (func $ne_i32 (type $0) (param $0 i32) (param $1 i32) (result i32)
     (return
       (i32.ne
         (get_local $0)
@@ -29,7 +30,7 @@
       )
     )
   )
-  (func $slt_i32 (param $0 i32) (param $1 i32) (result i32)
+  (func $slt_i32 (type $0) (param $0 i32) (param $1 i32) (result i32)
     (return
       (i32.lt_s
         (get_local $0)
@@ -37,7 +38,7 @@
       )
     )
   )
-  (func $sle_i32 (param $0 i32) (param $1 i32) (result i32)
+  (func $sle_i32 (type $0) (param $0 i32) (param $1 i32) (result i32)
     (return
       (i32.le_s
         (get_local $0)
@@ -45,7 +46,7 @@
       )
     )
   )
-  (func $ult_i32 (param $0 i32) (param $1 i32) (result i32)
+  (func $ult_i32 (type $0) (param $0 i32) (param $1 i32) (result i32)
     (return
       (i32.lt_u
         (get_local $0)
@@ -53,7 +54,7 @@
       )
     )
   )
-  (func $ule_i32 (param $0 i32) (param $1 i32) (result i32)
+  (func $ule_i32 (type $0) (param $0 i32) (param $1 i32) (result i32)
     (return
       (i32.le_u
         (get_local $0)
@@ -61,7 +62,7 @@
       )
     )
   )
-  (func $sgt_i32 (param $0 i32) (param $1 i32) (result i32)
+  (func $sgt_i32 (type $0) (param $0 i32) (param $1 i32) (result i32)
     (return
       (i32.gt_s
         (get_local $0)
@@ -69,7 +70,7 @@
       )
     )
   )
-  (func $sge_i32 (param $0 i32) (param $1 i32) (result i32)
+  (func $sge_i32 (type $0) (param $0 i32) (param $1 i32) (result i32)
     (return
       (i32.ge_s
         (get_local $0)
@@ -77,7 +78,7 @@
       )
     )
   )
-  (func $ugt_i32 (param $0 i32) (param $1 i32) (result i32)
+  (func $ugt_i32 (type $0) (param $0 i32) (param $1 i32) (result i32)
     (return
       (i32.gt_u
         (get_local $0)
@@ -85,7 +86,7 @@
       )
     )
   )
-  (func $uge_i32 (param $0 i32) (param $1 i32) (result i32)
+  (func $uge_i32 (type $0) (param $0 i32) (param $1 i32) (result i32)
     (return
       (i32.ge_u
         (get_local $0)

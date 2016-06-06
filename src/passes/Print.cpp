@@ -239,7 +239,12 @@ struct PrintSExpression : public Visitor<PrintSExpression> {
     printOpening(o, "get_local ") << printableLocal(curr->index) << ')';
   }
   void visitSetLocal(SetLocal *curr) {
-    printOpening(o, "set_local ") << printableLocal(curr->index);
+    if (curr->isTee()) {
+      printOpening(o, "tee_local ");
+    } else {
+      printOpening(o, "set_local ");
+    }
+    o << printableLocal(curr->index);
     incIndent();
     printFullLine(curr->value);
     decIndent();
@@ -281,7 +286,7 @@ struct PrintSExpression : public Visitor<PrintSExpression> {
   }
   void visitStore(Store *curr) {
     o << '(';
-    prepareColor(o) << printWasmType(curr->type) << ".store";
+    prepareColor(o) << printWasmType(curr->value->type) << ".store";
     if (curr->bytes < 4 || (curr->type == i64 && curr->bytes < 8)) {
       if (curr->bytes == 1) {
         o << '8';
@@ -359,6 +364,10 @@ struct PrintSExpression : public Visitor<PrintSExpression> {
       case DemoteFloat64:          o << "f32.demote/f64"; break;
       case ReinterpretInt32:       o << "f32.reinterpret/i32"; break;
       case ReinterpretInt64:       o << "f64.reinterpret/i64"; break;
+      case DropInt32:
+      case DropInt64:
+      case DropFloat32:
+      case DropFloat64:            o << "drop"; break;
       default: abort();
     }
     incIndent();

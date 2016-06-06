@@ -128,7 +128,9 @@ public:
   void visitSetLocal(SetLocal *curr) {
     shouldBeTrue(curr->index < getFunction()->getNumLocals(), curr, "set_local index must be small enough");
     if (curr->value->type != unreachable) {
-      shouldBeEqualOrFirstIsUnreachable(curr->value->type, curr->type, curr, "set_local type must be correct");
+      if (curr->type != none) { // tee is ok anyhow
+        shouldBeEqualOrFirstIsUnreachable(curr->value->type, curr->type, curr, "set_local type must be correct");
+      }
       shouldBeEqual(getFunction()->getLocalType(curr->index), curr->value->type, curr, "set_local type must match function");
     }
   }
@@ -139,7 +141,8 @@ public:
   void visitStore(Store *curr) {
     validateAlignment(curr->align);
     shouldBeEqualOrFirstIsUnreachable(curr->ptr->type, i32, curr, "store pointer type must be i32");
-    shouldBeEqualOrFirstIsUnreachable(curr->value->type, curr->type, curr, "store value type must match");
+    shouldBeUnequal(curr->value->type, none, curr, "store value type must not be none");
+    // TODO: enable a check that replaces this, for type being none shouldBeEqualOrFirstIsUnreachable(curr->value->type, curr->type, curr, "store value type must match");
   }
   void visitBinary(Binary *curr) {
     if (curr->left->type != unreachable && curr->right->type != unreachable) {
@@ -213,6 +216,10 @@ public:
       case DemoteFloat64:          shouldBeEqual(curr->value->type, f64, curr, "demote type must be correct"); break;
       case ReinterpretInt32:       shouldBeEqual(curr->value->type, i32, curr, "reinterpret/i32 type must be correct"); break;
       case ReinterpretInt64:       shouldBeEqual(curr->value->type, i64, curr, "reinterpret/i64 type must be correct"); break;
+      case DropInt32:              shouldBeEqual(curr->value->type, i32, curr, "drop/i32 type must be correct"); break;
+      case DropInt64:              shouldBeEqual(curr->value->type, i64, curr, "drop/i64 type must be correct"); break;
+      case DropFloat32:            shouldBeEqual(curr->value->type, f32, curr, "drop/f32 type must be correct"); break;
+      case DropFloat64:            shouldBeEqual(curr->value->type, f64, curr, "drop/f64 type must be correct"); break;
       default: abort();
     }
   }

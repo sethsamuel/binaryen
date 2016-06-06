@@ -15,7 +15,8 @@
  */
 
 //
-// Stops using return values from set_local and store nodes.
+// Stops using return values nodes that don't allow them. This converts
+// a module from before we had drop and tee into after.
 //
 
 #include <wasm.h>
@@ -32,30 +33,109 @@ struct DropReturnValues : public WalkerPass<PostWalker<DropReturnValues, Visitor
 
   std::vector<Expression*> expressionStack;
 
-  void visitSetLocal(SetLocal* curr) {
-    if (ExpressionAnalyzer::isResultUsed(expressionStack, getFunction())) {
-      Builder builder(*getModule());
-      replaceCurrent(builder.makeSequence(
-        curr,
-        builder.makeGetLocal(curr->index, curr->type)
-      ));
+  void maybeDrop(Expression* curr) {
+    if (isConcreteWasmType(curr->type) && !ExpressionAnalyzer::isResultUsed(expressionStack, getFunction())) {
+      replaceCurrent(Builder(*getModule()).makeDrop(curr));
     }
   }
 
+  void visitBlock(Block *curr) {
+    curr->finalize(); // changes may have occured in our children
+    maybeDrop(curr);
+  }
+  void visitIf(If *curr) {
+    curr->finalize();
+    maybeDrop(curr);
+  }
+  void visitLoop(Loop *curr) {
+    curr->finalize();
+    maybeDrop(curr);
+  }
+  void visitBreak(Break *curr) {
+    if (!curr->value || !isConcreteWasmType(curr->value->type)) return;
+    // we may use a block return value, and send values to it using breaks, but the block return
+    // value might be ignored. In that case, we'll drop() the block fallthrough, but we also
+    // need to not use block return values, as they will not match the lack of a fallthrough
+    auto check = [&](int i) {
+      // i is the index of a block or loop. we need to see if it is used. if it is not,
+      // we must drop our value
+      auto smallStack = expressionStack;
+      smallStack.resize(i + 1);
+      if (!ExpressionAnalyzer::isResultUsed(smallStack, getFunction())) {
+        // drop the value. but, it may have a side effect!
+        replaceCurrent(Builder(*getModule()).makeSequence(
+          Builder(*getModule()).makeDrop(curr->value), // value is first in order of operations, so just pull it out
+          curr
+        ));
+        curr->value = nullptr;
+      }
+    };
+    for (int i = int(expressionStack.size()) - 1; i >= 0; i--) {
+      if (auto* block = expressionStack[i]->dynCast<Block>()) {
+        if (block->name == curr->name) {
+          check(i);
+          break;
+        }
+      } else if (auto* loop = expressionStack[i]->dynCast<Loop>()) {
+        if (loop->in == curr->name) break;
+        if (loop->out == curr->name) {
+          check(i);
+          break;
+        }
+      }
+    }
+  }
+  void visitCall(Call *curr) {
+    maybeDrop(curr);
+  }
+  void visitCallImport(CallImport *curr) {
+    maybeDrop(curr);
+  }
+  void visitCallIndirect(CallIndirect *curr) {
+    maybeDrop(curr);
+  }
+  void visitGetLocal(GetLocal *curr) {
+    maybeDrop(curr);
+  }
+  void visitSetLocal(SetLocal* curr) {
+    if (curr->isTee() && !ExpressionAnalyzer::isResultUsed(expressionStack, getFunction())) {
+      curr->setTee(false); // this is not a tee
+    }
+  }
+  void visitLoad(Load *curr) {
+    maybeDrop(curr);
+  }
   void visitStore(Store* curr) {
+    curr->type = none; // TODO: use in wasm.h
+    // if a store returns a value, we need to copy it to a local
     if (ExpressionAnalyzer::isResultUsed(expressionStack, getFunction())) {
       Index index = getFunction()->getNumLocals();
-      getFunction()->vars.emplace_back(curr->type);
+      getFunction()->vars.emplace_back(curr->value->type);
       Builder builder(*getModule());
       replaceCurrent(builder.makeSequence(
         builder.makeSequence(
           builder.makeSetLocal(index, curr->value),
           curr
         ),
-        builder.makeGetLocal(index, curr->type)
+        builder.makeGetLocal(index, curr->value->type)
       ));
-      curr->value = builder.makeGetLocal(index, curr->type);
+      curr->value = builder.makeGetLocal(index, curr->value->type);
     }
+  }
+  void visitConst(Const *curr) {
+    maybeDrop(curr);
+  }
+  void visitUnary(Unary *curr) {
+    maybeDrop(curr);
+  }
+  void visitBinary(Binary *curr) {
+    maybeDrop(curr);
+  }
+  void visitSelect(Select *curr) {
+    maybeDrop(curr);
+  }
+  void visitHost(Host *curr) {
+    maybeDrop(curr);
   }
 
   static void visitPre(DropReturnValues* self, Expression** currp) {

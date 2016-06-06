@@ -16,17 +16,18 @@
   )
   (export "memory" memory)
   (type $FUNCSIG$iiii (func (param i32 i32 i32) (result i32)))
+  (type $1 (func (result i32)))
   (import $memcpy "env" "memcpy" (param i32 i32 i32) (result i32))
   (export "foo" $foo)
   (export "call_memcpy" $call_memcpy)
-  (func $foo (result i32)
+  (func $foo (type $1) (result i32)
     (return
       (i32.load offset=32
         (i32.const 0)
       )
     )
   )
-  (func $call_memcpy (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
+  (func $call_memcpy (type $FUNCSIG$iiii) (param $0 i32) (param $1 i32) (param $2 i32) (result i32)
     (return
       (call_import $memcpy
         (get_local $0)

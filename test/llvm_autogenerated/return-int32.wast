@@ -3,12 +3,13 @@
     (segment 4 "\10\04\00\00")
   )
   (export "memory" memory)
+  (type $0 (func (param i32) (result i32)))
   (export "return_i32" $return_i32)
   (export "return_i32_twice" $return_i32_twice)
-  (func $return_i32 (param $0 i32) (result i32)
+  (func $return_i32 (type $0) (param $0 i32) (result i32)
     (get_local $0)
   )
-  (func $return_i32_twice (param $0 i32) (result i32)
+  (func $return_i32_twice (type $0) (param $0 i32) (result i32)
     (block $label$0
       (br_if $label$0
         (i32.eqz

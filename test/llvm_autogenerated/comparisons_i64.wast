@@ -3,6 +3,7 @@
     (segment 4 "\10\04\00\00")
   )
   (export "memory" memory)
+  (type $0 (func (param i64 i64) (result i32)))
   (export "eq_i64" $eq_i64)
   (export "ne_i64" $ne_i64)
   (export "slt_i64" $slt_i64)
@@ -13,7 +14,7 @@
   (export "sge_i64" $sge_i64)
   (export "ugt_i64" $ugt_i64)
   (export "uge_i64" $uge_i64)
-  (func $eq_i64 (param $0 i64) (param $1 i64) (result i32)
+  (func $eq_i64 (type $0) (param $0 i64) (param $1 i64) (result i32)
     (return
       (i64.eq
         (get_local $0)
@@ -21,7 +22,7 @@
       )
     )
   )
-  (func $ne_i64 (param $0 i64) (param $1 i64) (result i32)
+  (func $ne_i64 (type $0) (param $0 i64) (param $1 i64) (result i32)
     (return
       (i64.ne
         (get_local $0)
@@ -29,7 +30,7 @@
       )
     )
   )
-  (func $slt_i64 (param $0 i64) (param $1 i64) (result i32)
+  (func $slt_i64 (type $0) (param $0 i64) (param $1 i64) (result i32)
     (return
       (i64.lt_s
         (get_local $0)
@@ -37,7 +38,7 @@
       )
     )
   )
-  (func $sle_i64 (param $0 i64) (param $1 i64) (result i32)
+  (func $sle_i64 (type $0) (param $0 i64) (param $1 i64) (result i32)
     (return
       (i64.le_s
         (get_local $0)
@@ -45,7 +46,7 @@
       )
     )
   )
-  (func $ult_i64 (param $0 i64) (param $1 i64) (result i32)
+  (func $ult_i64 (type $0) (param $0 i64) (param $1 i64) (result i32)
     (return
       (i64.lt_u
         (get_local $0)
@@ -53,7 +54,7 @@
       )
     )
   )
-  (func $ule_i64 (param $0 i64) (param $1 i64) (result i32)
+  (func $ule_i64 (type $0) (param $0 i64) (param $1 i64) (result i32)
     (return
       (i64.le_u
         (get_local $0)
@@ -61,7 +62,7 @@
       )
     )
   )
-  (func $sgt_i64 (param $0 i64) (param $1 i64) (result i32)
+  (func $sgt_i64 (type $0) (param $0 i64) (param $1 i64) (result i32)
     (return
       (i64.gt_s
         (get_local $0)
@@ -69,7 +70,7 @@
       )
     )
   )
-  (func $sge_i64 (param $0 i64) (param $1 i64) (result i32)
+  (func $sge_i64 (type $0) (param $0 i64) (param $1 i64) (result i32)
     (return
       (i64.ge_s
         (get_local $0)
@@ -77,7 +78,7 @@
       )
     )
   )
-  (func $ugt_i64 (param $0 i64) (param $1 i64) (result i32)
+  (func $ugt_i64 (type $0) (param $0 i64) (param $1 i64) (result i32)
     (return
       (i64.gt_u
         (get_local $0)
@@ -85,7 +86,7 @@
       )
     )
   )
-  (func $uge_i64 (param $0 i64) (param $1 i64) (result i32)
+  (func $uge_i64 (type $0) (param $0 i64) (param $1 i64) (result i32)
     (return
       (i64.ge_u
         (get_local $0)

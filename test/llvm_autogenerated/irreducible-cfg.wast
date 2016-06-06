@@ -3,9 +3,10 @@
     (segment 4 "\10\04\00\00")
   )
   (export "memory" memory)
+  (type $0 (func (param i32 i32 i32 i32)))
   (export "test0" $test0)
   (export "test1" $test1)
-  (func $test0 (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
+  (func $test0 (type $0) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
     (local $4 f64)
     (local $5 i32)
     (local $6 i32)
@@ -62,7 +63,7 @@
                 (br $label$2)
               )
               (f64.store align=4
-                (set_local $2
+                (tee_local $2
                   (i32.add
                     (get_local $0)
                     (i32.shl
@@ -71,7 +72,7 @@
                     )
                   )
                 )
-                (set_local $4
+                (tee_local $4
                   (f64.mul
                     (f64.load align=4
                       (get_local $2)
@@ -119,7 +120,7 @@
       (br $label$2)
     )
   )
-  (func $test1 (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
+  (func $test1 (type $0) (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
     (local $4 f64)
     (local $5 i32)
     (local $6 i32)
@@ -178,7 +179,7 @@
                     (br $label$2)
                   )
                   (f64.store align=4
-                    (set_local $2
+                    (tee_local $2
                       (i32.add
                         (get_local $0)
                         (i32.shl
@@ -187,7 +188,7 @@
                         )
                       )
                     )
-                    (set_local $4
+                    (tee_local $4
                       (f64.mul
                         (f64.load align=4
                           (get_local $2)
@@ -206,7 +207,7 @@
                 )
                 (br_if $label$5
                   (i32.lt_s
-                    (set_local $2
+                    (tee_local $2
                       (i32.add
                         (get_local $2)
                         (i32.const 1)
