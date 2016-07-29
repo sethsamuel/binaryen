@@ -303,6 +303,9 @@ struct ExpressionManipulator {
       Expression* visitSelect(Select *curr) {
         return builder.makeSelect(copy(curr->condition), copy(curr->ifTrue), copy(curr->ifFalse));
       }
+      Expression* visitDrop(Drop *curr) {
+        return builder.makeDrop(copy(curr->value));
+      }
       Expression* visitReturn(Return *curr) {
         return builder.makeReturn(copy(curr->value));
       }
@@ -355,7 +358,7 @@ struct ExpressionAnalyzer {
         assert(above == iff->ifTrue || above == iff->ifFalse);
         // continue down
       } else {
-        if (curr->is<Unary>() && curr->cast<Unary>()->isDrop()) return false;
+        if (curr->is<Drop>()) return false;
         return true; // all other node types use the result
       }
     }
@@ -529,6 +532,10 @@ struct ExpressionAnalyzer {
           PUSH(Select, ifTrue);
           PUSH(Select, ifFalse);
           PUSH(Select, condition);
+          break;
+        }
+        case Expression::Id::DropId: {
+          PUSH(Drop, value);
           break;
         }
         case Expression::Id::ReturnId: {
@@ -741,6 +748,10 @@ struct ExpressionAnalyzer {
           PUSH(Select, ifTrue);
           PUSH(Select, ifFalse);
           PUSH(Select, condition);
+          break;
+        }
+        case Expression::Id::DropId: {
+          PUSH(Drop, value);
           break;
         }
         case Expression::Id::ReturnId: {

@@ -220,15 +220,8 @@ public:
 
   // Additional helpers
 
-  Unary* makeDrop(Expression *value) {
-    auto* ret = allocator.alloc<Unary>();
-    switch (value->type) {
-      case i32: ret->op = DropInt32; break;
-      case i64: ret->op = DropInt64; break;
-      case f32: ret->op = DropFloat32; break;
-      case f64: ret->op = DropFloat64; break;
-      default: WASM_UNREACHABLE();
-    }
+  Drop* makeDrop(Expression *value) {
+    auto* ret = allocator.alloc<Drop>();
     ret->value = value;
     ret->finalize();
     return ret;

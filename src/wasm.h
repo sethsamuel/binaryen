@@ -803,7 +803,6 @@ enum UnaryOp {
   PromoteFloat32, // f32 to f64
   DemoteFloat64, // f64 to f32
   ReinterpretInt32, ReinterpretInt64, // reinterpret bits to float
-  DropInt32, DropInt64, DropFloat32, DropFloat64 // drop values
 };
 
 enum BinaryOp {
@@ -878,6 +877,7 @@ public:
     UnaryId,
     BinaryId,
     SelectId,
+    DropId,
     ReturnId,
     HostId,
     NopId,
@@ -930,6 +930,7 @@ inline const char *getExpressionName(Expression *curr) {
     case Expression::Id::UnaryId: return "unary";
     case Expression::Id::BinaryId: return "binary";
     case Expression::Id::SelectId: return "select";
+    case Expression::Id::DropId: return "drop";
     case Expression::Id::ReturnId: return "return";
     case Expression::Id::HostId: return "host";
     case Expression::Id::NopId: return "nop";
@@ -1197,8 +1198,6 @@ public:
 
   bool isRelational() { return op == EqZInt32 || op == EqZInt64; }
 
-  bool isDrop() { return op == DropInt32 || op == DropInt64 || op == DropFloat32 || op == DropFloat64; }
-
   void finalize() {
     switch (op) {
       case ClzInt32:
@@ -1247,10 +1246,6 @@ public:
       case ConvertUInt32ToFloat64:
       case ConvertSInt64ToFloat64:
       case ConvertUInt64ToFloat64: type = f64; break;
-      case DropInt32:
-      case DropInt64:
-      case DropFloat32:
-      case DropFloat64: type = none; break;
       default: std::cerr << "waka " << op << '\n'; WASM_UNREACHABLE();
     }
   }
@@ -1326,6 +1321,14 @@ public:
     assert(ifTrue && ifFalse);
     type = getReachableWasmType(ifTrue->type, ifFalse->type);
   }
+};
+
+class Drop : public SpecificExpression<Expression::DropId> {
+public:
+  Drop() {}
+  Drop(MixedArena& allocator) {}
+
+  Expression *value;
 };
 
 class Return : public SpecificExpression<Expression::ReturnId> {

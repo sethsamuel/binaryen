@@ -425,6 +425,12 @@ public:
     NOTE_EVAL1(condition.value);
     return condition.value.geti32() ? ifTrue : ifFalse; // ;-)
   }
+  Flow visitDrop(Drop *curr) {
+    NOTE_ENTER("Drop");
+    Flow value = visit(curr->value);
+    if (value.breaking()) return value;
+    return Flow();
+  }
   Flow visitReturn(Return *curr) {
     NOTE_ENTER("Return");
     Flow flow;

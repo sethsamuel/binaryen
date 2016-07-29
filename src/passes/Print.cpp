@@ -364,10 +364,6 @@ struct PrintSExpression : public Visitor<PrintSExpression> {
       case DemoteFloat64:          o << "f32.demote/f64"; break;
       case ReinterpretInt32:       o << "f32.reinterpret/i32"; break;
       case ReinterpretInt64:       o << "f64.reinterpret/i64"; break;
-      case DropInt32:
-      case DropInt64:
-      case DropFloat32:
-      case DropFloat64:            o << "drop"; break;
       default: abort();
     }
     incIndent();
@@ -473,6 +469,13 @@ struct PrintSExpression : public Visitor<PrintSExpression> {
     printFullLine(curr->ifTrue);
     printFullLine(curr->ifFalse);
     printFullLine(curr->condition);
+    decIndent();
+  }
+  void visitDrop(Drop *curr) {
+    o << '(';
+    prepareColor(o) << "drop";
+    incIndent();
+    printFullLine(curr->value);
     decIndent();
   }
   void visitReturn(Return *curr) {

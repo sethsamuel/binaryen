@@ -616,12 +616,6 @@ public:
             if (op[3] == 0) return makeBinary(s, BINARY_FLOAT(Div), type);
           }
           if (op[1] == 'e') return makeUnary(s, UnaryOp::DemoteFloat64, type);
-          if (op[1] == 'r') {
-            if (strcmp(op, "drop/i32") == 0) return makeUnary(s, UnaryOp::DropInt32, none);
-            if (strcmp(op, "drop/i64") == 0) return makeUnary(s, UnaryOp::DropInt64, none);
-            if (strcmp(op, "drop/f32") == 0) return makeUnary(s, UnaryOp::DropFloat32, none);
-            if (strcmp(op, "drop/f64") == 0) return makeUnary(s, UnaryOp::DropFloat64, none);
-          }
           abort_on(op);
         }
         case 'e': {
@@ -737,6 +731,10 @@ public:
             if (id == CALL_IMPORT) return makeCallImport(s);
             if (id == CALL_INDIRECT) return makeCallIndirect(s);
           } else if (str[1] == 'u') return makeHost(s, HostOp::CurrentMemory);
+          abort_on(str);
+        }
+        case 'd': {
+          if (str[1] == 'r') return makeDrop(s);
           abort_on(str);
         }
         case 'e': {
@@ -875,6 +873,13 @@ private:
     ret->ifTrue = parseExpression(s[1]);
     ret->ifFalse = parseExpression(s[2]);
     ret->condition = parseExpression(s[3]);
+    ret->finalize();
+    return ret;
+  }
+
+  Expression* makeDrop(Element& s) {
+    auto ret = allocator.alloc<Drop>();
+    ret->value = parseExpression(s[1]);
     ret->finalize();
     return ret;
   }
