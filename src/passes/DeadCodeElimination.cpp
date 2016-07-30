@@ -191,6 +191,7 @@ struct DeadCodeElimination : public WalkerPass<PostWalker<DeadCodeElimination, V
         case Expression::Id::UnaryId: DELEGATE(Unary);
         case Expression::Id::BinaryId: DELEGATE(Binary);
         case Expression::Id::SelectId: DELEGATE(Select);
+        case Expression::Id::DropId: DELEGATE(Drop);
         case Expression::Id::ReturnId: DELEGATE(Return);
         case Expression::Id::HostId: DELEGATE(Host);
         case Expression::Id::NopId: DELEGATE(Nop);
