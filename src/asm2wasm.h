@@ -1002,9 +1002,9 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
         IString name = ast[2][1]->getIString();
         if (functionVariables.has(name)) {
           auto ret = allocator.alloc<SetLocal>();
-          ret->setTee(false);
           ret->index = function->getLocalIndex(ast[2][1]->getIString());
           ret->value = process(ast[3]);
+          ret->setTee(false);
           ret->finalize();
           return ret;
         }

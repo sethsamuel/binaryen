@@ -1110,10 +1110,6 @@ public:
   Index index;
   Expression *value;
 
-  void finalize() {
-    setTee(true); // default is tee
-  }
-
   bool isTee() {
     return type != none;
   }
