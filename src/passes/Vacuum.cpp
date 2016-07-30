@@ -51,6 +51,7 @@ struct Vacuum : public WalkerPass<PostWalker<Vacuum, Visitor<Vacuum>>> {
         case Expression::Id::LoadId:
         case Expression::Id::StoreId:
         case Expression::Id::ReturnId:
+        case Expression::Id::DropId:
         case Expression::Id::HostId:
         case Expression::Id::UnreachableId: return curr; // always needed
 
