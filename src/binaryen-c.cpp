@@ -488,6 +488,21 @@ BinaryenExpressionRef BinaryenSetLocal(BinaryenModuleRef module, BinaryenIndex i
 
   ret->index = index;
   ret->value = (Expression*)value;
+  ret->setTee(false);
+  ret->finalize();
+  return static_cast<Expression*>(ret);
+}
+BinaryenExpressionRef BinaryenTeeLocal(BinaryenModuleRef module, BinaryenIndex index, BinaryenExpressionRef value) {
+  auto* ret = ((Module*)module)->allocator.alloc<SetLocal>();
+
+  if (tracing) {
+    auto id = noteExpression(ret);
+    std::cout << "  expressions[" << id << "] = BinaryenTeeLocal(the_module, " << index << ", expressions[" << expressions[value] << "]);\n";
+  }
+
+  ret->index = index;
+  ret->value = (Expression*)value;
+  ret->setTee(true);
   ret->finalize();
   return static_cast<Expression*>(ret);
 }
@@ -582,6 +597,18 @@ BinaryenExpressionRef BinaryenSelect(BinaryenModuleRef module, BinaryenExpressio
   ret->condition = (Expression*)condition;
   ret->ifTrue = (Expression*)ifTrue;
   ret->ifFalse = (Expression*)ifFalse;
+  ret->finalize();
+  return static_cast<Expression*>(ret);
+}
+BinaryenExpressionRef BinaryenDrop(BinaryenModuleRef module, BinaryenExpressionRef value) {
+  auto* ret = ((Module*)module)->allocator.alloc<Drop>();
+
+  if (tracing) {
+    auto id = noteExpression(ret);
+    std::cout << "  expressions[" << id << "] = BinaryenDrop(the_module, expressions[" << expressions[value] << "]);\n";
+  }
+
+  ret->value = (Expression*)value;
   ret->finalize();
   return static_cast<Expression*>(ret);
 }
