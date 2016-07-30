@@ -739,6 +739,7 @@ class S2WasmBuilder {
         set->index = func->getLocalIndex(assign);
         set->value = curr;
         set->type = curr->type;
+        set->setTee(false);
         addToBlock(set);
       }
     };
@@ -1131,7 +1132,7 @@ class S2WasmBuilder {
         Name assign = getAssign();
         skipComma();
         auto curr = allocator->alloc<SetLocal>();
-        curr->setTee(false);
+        curr->setTee(true);
         curr->index = func->getLocalIndex(getAssign());
         skipComma();
         curr->value = getInput();
