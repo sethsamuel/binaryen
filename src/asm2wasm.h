@@ -1005,7 +1005,7 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
           ret->setTee(false);
           ret->index = function->getLocalIndex(ast[2][1]->getIString());
           ret->value = process(ast[3]);
-          ret->type = ret->value->type;
+          ret->finalize();
           return ret;
         }
         // global var, do a store to memory
@@ -1018,6 +1018,7 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
         ret->ptr = builder.makeConst(Literal(int32_t(global.address)));
         ret->value = process(ast[3]);
         ret->valueType = global.type;
+        ret->finalize();
         return ret;
       } else if (ast[2][0] == SUB) {
         Ref target = ast[2];
@@ -1032,7 +1033,8 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
         ret->ptr = processUnshifted(target[2], view.bytes);
         ret->value = process(ast[3]);
         ret->valueType = asmToWasmType(view.type);
-        if (ret->type != ret->value->type) {
+        ret->finalize();
+        if (ret->valueType != ret->value->type) {
           // in asm.js we have some implicit coercions that we must do explicitly here
           if (ret->type == f32 && ret->value->type == f64) {
             auto conv = allocator.alloc<Unary>();
@@ -1329,7 +1331,7 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
             set->setTee(false);
             set->index = function->getLocalIndex(I32_TEMP);
             set->value = value;
-            set->type = i32;
+            set->finalize();
             auto get = [&]() {
               auto ret = allocator.alloc<GetLocal>();
               ret->index = function->getLocalIndex(I32_TEMP);
