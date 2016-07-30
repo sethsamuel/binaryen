@@ -202,8 +202,9 @@ void test_core() {
     BinaryenUnary(module, BinaryenEqZInt32(), // check the output type of the call node
       BinaryenCallIndirect(module, makeInt32(module, 2449), callOperands4, 4, "iiIfF")
     ),
-    BinaryenGetLocal(module, 0, BinaryenInt32()),
+    BinaryenDrop(module, BinaryenGetLocal(module, 0, BinaryenInt32())),
     BinaryenSetLocal(module, 0, makeInt32(module, 101)),
+    BinaryenDrop(module, BinaryenTeeLocal(module, 0, makeInt32(module, 102))),
     BinaryenLoad(module, 4, 0, 0, 0, BinaryenInt32(), makeInt32(module, 1)),
     BinaryenLoad(module, 1, 1, 2, 4, BinaryenInt64(), makeInt32(module, 8)),
     BinaryenLoad(module, 4, 0, 0, 0, BinaryenFloat32(), makeInt32(module, 2)),

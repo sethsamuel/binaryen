@@ -4,8 +4,6 @@
   )
   (export "memory" memory)
   (type $FUNCSIG$dddd (func (param f64 f64 f64) (result f64)))
-  (type $1 (func (param f64 f64) (result f64)))
-  (type $2 (func (param f64) (result f64)))
   (import $fma "env" "fma" (param f64 f64 f64) (result f64))
   (export "fadd64" $fadd64)
   (export "fsub64" $fsub64)
@@ -23,7 +21,7 @@
   (export "fmin64" $fmin64)
   (export "fmax64" $fmax64)
   (export "fma64" $fma64)
-  (func $fadd64 (type $1) (param $0 f64) (param $1 f64) (result f64)
+  (func $fadd64 (param $0 f64) (param $1 f64) (result f64)
     (return
       (f64.add
         (get_local $0)
@@ -31,7 +29,7 @@
       )
     )
   )
-  (func $fsub64 (type $1) (param $0 f64) (param $1 f64) (result f64)
+  (func $fsub64 (param $0 f64) (param $1 f64) (result f64)
     (return
       (f64.sub
         (get_local $0)
@@ -39,7 +37,7 @@
       )
     )
   )
-  (func $fmul64 (type $1) (param $0 f64) (param $1 f64) (result f64)
+  (func $fmul64 (param $0 f64) (param $1 f64) (result f64)
     (return
       (f64.mul
         (get_local $0)
@@ -47,7 +45,7 @@
       )
     )
   )
-  (func $fdiv64 (type $1) (param $0 f64) (param $1 f64) (result f64)
+  (func $fdiv64 (param $0 f64) (param $1 f64) (result f64)
     (return
       (f64.div
         (get_local $0)
@@ -55,21 +53,21 @@
       )
     )
   )
-  (func $fabs64 (type $2) (param $0 f64) (result f64)
+  (func $fabs64 (param $0 f64) (result f64)
     (return
       (f64.abs
         (get_local $0)
       )
     )
   )
-  (func $fneg64 (type $2) (param $0 f64) (result f64)
+  (func $fneg64 (param $0 f64) (result f64)
     (return
       (f64.neg
         (get_local $0)
       )
     )
   )
-  (func $copysign64 (type $1) (param $0 f64) (param $1 f64) (result f64)
+  (func $copysign64 (param $0 f64) (param $1 f64) (result f64)
     (return
       (f64.copysign
         (get_local $0)
@@ -77,49 +75,49 @@
       )
     )
   )
-  (func $sqrt64 (type $2) (param $0 f64) (result f64)
+  (func $sqrt64 (param $0 f64) (result f64)
     (return
       (f64.sqrt
         (get_local $0)
       )
     )
   )
-  (func $ceil64 (type $2) (param $0 f64) (result f64)
+  (func $ceil64 (param $0 f64) (result f64)
     (return
       (f64.ceil
         (get_local $0)
       )
     )
   )
-  (func $floor64 (type $2) (param $0 f64) (result f64)
+  (func $floor64 (param $0 f64) (result f64)
     (return
       (f64.floor
         (get_local $0)
       )
     )
   )
-  (func $trunc64 (type $2) (param $0 f64) (result f64)
+  (func $trunc64 (param $0 f64) (result f64)
     (return
       (f64.trunc
         (get_local $0)
       )
     )
   )
-  (func $nearest64 (type $2) (param $0 f64) (result f64)
+  (func $nearest64 (param $0 f64) (result f64)
     (return
       (f64.nearest
         (get_local $0)
       )
     )
   )
-  (func $nearest64_via_rint (type $2) (param $0 f64) (result f64)
+  (func $nearest64_via_rint (param $0 f64) (result f64)
     (return
       (f64.nearest
         (get_local $0)
       )
     )
   )
-  (func $fmin64 (type $2) (param $0 f64) (result f64)
+  (func $fmin64 (param $0 f64) (result f64)
     (return
       (f64.min
         (get_local $0)
@@ -127,7 +125,7 @@
       )
     )
   )
-  (func $fmax64 (type $2) (param $0 f64) (result f64)
+  (func $fmax64 (param $0 f64) (result f64)
     (return
       (f64.max
         (get_local $0)
@@ -135,7 +133,7 @@
       )
     )
   )
-  (func $fma64 (type $FUNCSIG$dddd) (param $0 f64) (param $1 f64) (param $2 f64) (result f64)
+  (func $fma64 (param $0 f64) (param $1 f64) (param $2 f64) (result f64)
     (return
       (call_import $fma
         (get_local $0)

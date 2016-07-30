@@ -318,9 +318,16 @@
               (f64.const 3.7)
             )
           )
-          (get_local $0)
+          (drop
+            (get_local $0)
+          )
           (set_local $0
             (i32.const 101)
+          )
+          (drop
+            (tee_local $0
+              (i32.const 102)
+            )
           )
           (i32.load
             (i32.const 1)

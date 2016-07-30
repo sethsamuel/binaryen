@@ -9,7 +9,7 @@
   (import $fmodf "env" "fmodf" (param f32 f32) (result f32))
   (export "frem32" $frem32)
   (export "frem64" $frem64)
-  (func $frem32 (type $FUNCSIG$fff) (param $0 f32) (param $1 f32) (result f32)
+  (func $frem32 (param $0 f32) (param $1 f32) (result f32)
     (return
       (call_import $fmodf
         (get_local $0)
@@ -17,7 +17,7 @@
       )
     )
   )
-  (func $frem64 (type $FUNCSIG$ddd) (param $0 f64) (param $1 f64) (result f64)
+  (func $frem64 (param $0 f64) (param $1 f64) (result f64)
     (return
       (call_import $fmod
         (get_local $0)

@@ -440,7 +440,7 @@
         (if
           (i32.ne
             (i32.rem_u
-              (set_local $0
+              (tee_local $0
                 (call $check)
               )
               (i32.const 4)

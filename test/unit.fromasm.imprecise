@@ -90,7 +90,7 @@
   (func $conversions
     (local $0 f32)
     (local $1 i32)
-    (set_local $1
+    (tee_local $1
       (i32.trunc_s/f32
         (get_local $0)
       )

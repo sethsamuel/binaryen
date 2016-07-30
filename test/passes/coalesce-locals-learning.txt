@@ -28,19 +28,27 @@
     (set_local $1
       (i32.const 0)
     )
-    (get_local $0)
-    (get_local $1)
+    (drop
+      (get_local $0)
+    )
+    (drop
+      (get_local $1)
+    )
   )
   (func $almost-interfere (type $2)
     (local $0 i32)
     (set_local $0
       (i32.const 0)
     )
-    (get_local $0)
+    (drop
+      (get_local $0)
+    )
     (set_local $0
       (i32.const 0)
     )
-    (get_local $0)
+    (drop
+      (get_local $0)
+    )
   )
   (func $redundant-copy (type $2)
     (local $0 i32)
@@ -48,7 +56,9 @@
       (i32.const 0)
     )
     (get_local $0)
-    (get_local $0)
+    (drop
+      (get_local $0)
+    )
   )
   (func $ineffective-store (type $2)
     (local $0 i32)
@@ -56,7 +66,9 @@
     (set_local $0
       (i32.const 0)
     )
-    (get_local $0)
+    (drop
+      (get_local $0)
+    )
   )
   (func $block (type $2)
     (local $0 i32)
@@ -65,7 +77,9 @@
         (i32.const 0)
       )
     )
-    (get_local $0)
+    (drop
+      (get_local $0)
+    )
   )
   (func $see-both-sides (type $2)
     (local $0 i32)
@@ -78,8 +92,12 @@
         (i32.const 0)
       )
     )
-    (get_local $0)
-    (get_local $1)
+    (drop
+      (get_local $0)
+    )
+    (drop
+      (get_local $1)
+    )
   )
   (func $see-br-and-ignore-dead (type $2)
     (local $0 i32)
@@ -89,10 +107,14 @@
     (block $block
       (br $block)
       (i32.const 0)
-      (get_local $0)
+      (drop
+        (get_local $0)
+      )
       (i32.const -1)
     )
-    (get_local $0)
+    (drop
+      (get_local $0)
+    )
   )
   (func $see-block-body (type $2)
     (local $0 i32)
@@ -104,30 +126,46 @@
       (set_local $1
         (i32.const 0)
       )
-      (get_local $1)
+      (drop
+        (get_local $1)
+      )
       (br $block)
     )
-    (get_local $0)
+    (drop
+      (get_local $0)
+    )
   )
   (func $zero-init (type $2)
     (local $0 i32)
     (local $1 i32)
-    (get_local $0)
-    (get_local $1)
+    (drop
+      (get_local $0)
+    )
+    (drop
+      (get_local $1)
+    )
   )
   (func $multi (type $2)
     (local $0 i32)
     (local $1 i32)
-    (get_local $0)
-    (get_local $1)
+    (drop
+      (get_local $0)
+    )
+    (drop
+      (get_local $1)
+    )
   )
   (func $if-else (type $2)
     (local $0 i32)
     (local $1 i32)
     (if
       (i32.const 0)
-      (get_local $0)
-      (get_local $1)
+      (drop
+        (get_local $0)
+      )
+      (drop
+        (get_local $1)
+      )
     )
   )
   (func $if-else-parallel (type $2)
@@ -138,13 +176,17 @@
         (set_local $0
           (i32.const 0)
         )
-        (get_local $0)
+        (drop
+          (get_local $0)
+        )
       )
       (block $block3
         (set_local $0
           (i32.const 1)
         )
-        (get_local $0)
+        (drop
+          (get_local $0)
+        )
       )
     )
   )
@@ -160,8 +202,12 @@
         (i32.const 1)
       )
     )
-    (get_local $0)
-    (get_local $1)
+    (drop
+      (get_local $0)
+    )
+    (drop
+      (get_local $1)
+    )
   )
   (func $if-else-through (type $2)
     (local $0 i32)
@@ -174,11 +220,19 @@
     )
     (if
       (i32.const 0)
-      (i32.const 1)
-      (i32.const 2)
+      (drop
+        (i32.const 1)
+      )
+      (drop
+        (i32.const 2)
+      )
     )
-    (get_local $0)
-    (get_local $1)
+    (drop
+      (get_local $0)
+    )
+    (drop
+      (get_local $1)
+    )
   )
   (func $if-through (type $2)
     (local $0 i32)
@@ -191,10 +245,16 @@
     )
     (if
       (i32.const 0)
-      (i32.const 1)
+      (drop
+        (i32.const 1)
+      )
     )
-    (get_local $0)
-    (get_local $1)
+    (drop
+      (get_local $0)
+    )
+    (drop
+      (get_local $1)
+    )
   )
   (func $if-through2 (type $2)
     (local $0 i32)
@@ -208,8 +268,12 @@
         (i32.const 1)
       )
     )
-    (get_local $0)
-    (get_local $1)
+    (drop
+      (get_local $0)
+    )
+    (drop
+      (get_local $1)
+    )
   )
   (func $if-through2 (type $2)
     (local $0 i32)
@@ -220,8 +284,12 @@
     (if
       (i32.const 0)
       (block $block1
-        (get_local $0)
-        (get_local $1)
+        (drop
+          (get_local $0)
+        )
+        (drop
+          (get_local $1)
+        )
       )
     )
   )
@@ -229,12 +297,16 @@
     (local $0 i32)
     (local $1 i32)
     (if
-      (set_local $0
+      (tee_local $0
         (i32.const 0)
       )
       (block $block1
-        (get_local $0)
-        (get_local $1)
+        (drop
+          (get_local $0)
+        )
+        (drop
+          (get_local $1)
+        )
       )
     )
   )
@@ -247,10 +319,14 @@
         (set_local $0
           (i32.const 0)
         )
-        (get_local $0)
+        (drop
+          (get_local $0)
+        )
       )
     )
-    (get_local $1)
+    (drop
+      (get_local $1)
+    )
   )
   (func $if4 (type $2)
     (local $0 i32)
@@ -260,13 +336,17 @@
         (set_local $0
           (i32.const 0)
         )
-        (get_local $0)
+        (drop
+          (get_local $0)
+        )
         (set_local $0
           (i32.const 1)
         )
       )
     )
-    (get_local $0)
+    (drop
+      (get_local $0)
+    )
   )
   (func $if5 (type $2)
     (local $0 i32)
@@ -274,23 +354,31 @@
     (if
       (i32.const 0)
       (block $block1
-        (get_local $0)
+        (drop
+          (get_local $0)
+        )
         (set_local $1
           (i32.const 1)
         )
       )
     )
-    (get_local $1)
+    (drop
+      (get_local $1)
+    )
   )
   (func $loop (type $2)
     (local $0 i32)
     (local $1 i32)
     (loop $out $in
-      (get_local $0)
+      (drop
+        (get_local $0)
+      )
       (set_local $0
         (i32.const 0)
       )
-      (get_local $1)
+      (drop
+        (get_local $1)
+      )
       (br $in)
     )
   )
@@ -298,33 +386,51 @@
     (local $0 i32)
     (block $block
       (br $block)
-      (get_local $0)
-      (get_local $0)
+      (drop
+        (get_local $0)
+      )
+      (drop
+        (get_local $0)
+      )
     )
   )
   (func $interfere-in-dead2 (type $2)
     (local $0 i32)
     (block $block
       (unreachable)
-      (get_local $0)
-      (get_local $0)
+      (drop
+        (get_local $0)
+      )
+      (drop
+        (get_local $0)
+      )
     )
   )
   (func $interfere-in-dead3 (type $2)
     (local $0 i32)
     (block $block
       (return)
-      (get_local $0)
-      (get_local $0)
+      (drop
+        (get_local $0)
+      )
+      (drop
+        (get_local $0)
+      )
     )
   )
   (func $params (type $3) (param $0 i32) (param $1 f32)
     (local $2 i32)
     (local $3 i32)
     (local $4 i32)
-    (get_local $2)
-    (get_local $3)
-    (get_local $4)
+    (drop
+      (get_local $2)
+    )
+    (drop
+      (get_local $3)
+    )
+    (drop
+      (get_local $4)
+    )
   )
   (func $interfere-in-dead (type $2)
     (local $0 i32)
@@ -333,8 +439,12 @@
       (br_if $block
         (i32.const 0)
       )
-      (get_local $0)
-      (get_local $1)
+      (drop
+        (get_local $0)
+      )
+      (drop
+        (get_local $1)
+      )
     )
   )
   (func $switch (type $2)
@@ -347,13 +457,21 @@
           (br_table $switch-case$1 $switch-case$2 $switch-case$1 $switch-case$1 $switch$def
             (i32.const 100)
           )
+          (drop
+            (get_local $0)
+          )
+        )
+        (drop
           (get_local $0)
         )
-        (get_local $0)
       )
-      (get_local $1)
+      (drop
+        (get_local $1)
+      )
     )
-    (get_local $2)
+    (drop
+      (get_local $2)
+    )
   )
   (func $greedy-can-be-happy (type $2)
     (local $0 i32)
@@ -371,8 +489,12 @@
             (set_local $1
               (i32.const 101)
             )
-            (get_local $0)
-            (get_local $1)
+            (drop
+              (get_local $0)
+            )
+            (drop
+              (get_local $1)
+            )
           )
           (block $block5
             (set_local $0
@@ -381,8 +503,12 @@
             (set_local $1
               (i32.const 103)
             )
-            (get_local $0)
-            (get_local $1)
+            (drop
+              (get_local $0)
+            )
+            (drop
+              (get_local $1)
+            )
           )
         )
         (if
@@ -394,8 +520,12 @@
             (set_local $1
               (i32.const 105)
             )
-            (get_local $0)
-            (get_local $1)
+            (drop
+              (get_local $0)
+            )
+            (drop
+              (get_local $1)
+            )
           )
           (block $block10
             (set_local $0
@@ -404,8 +534,12 @@
             (set_local $1
               (i32.const 107)
             )
-            (get_local $0)
-            (get_local $1)
+            (drop
+              (get_local $0)
+            )
+            (drop
+              (get_local $1)
+            )
           )
         )
       )
@@ -418,8 +552,12 @@
           (set_local $1
             (i32.const 109)
           )
-          (get_local $0)
-          (get_local $1)
+          (drop
+            (get_local $0)
+          )
+          (drop
+            (get_local $1)
+          )
         )
         (block $block15
           (set_local $0
@@ -428,8 +566,12 @@
           (set_local $1
             (i32.const 111)
           )
-          (get_local $0)
-          (get_local $1)
+          (drop
+            (get_local $0)
+          )
+          (drop
+            (get_local $1)
+          )
         )
       )
     )
@@ -450,8 +592,12 @@
             (set_local $1
               (i32.const 101)
             )
-            (get_local $0)
-            (get_local $1)
+            (drop
+              (get_local $0)
+            )
+            (drop
+              (get_local $1)
+            )
           )
           (block $block5
             (set_local $0
@@ -460,8 +606,12 @@
             (set_local $1
               (i32.const 103)
             )
-            (get_local $0)
-            (get_local $1)
+            (drop
+              (get_local $0)
+            )
+            (drop
+              (get_local $1)
+            )
           )
         )
         (if
@@ -473,8 +623,12 @@
             (set_local $1
               (i32.const 105)
             )
-            (get_local $0)
-            (get_local $1)
+            (drop
+              (get_local $0)
+            )
+            (drop
+              (get_local $1)
+            )
           )
           (block $block10
             (set_local $0
@@ -483,8 +637,12 @@
             (set_local $1
               (i32.const 107)
             )
-            (get_local $0)
-            (get_local $1)
+            (drop
+              (get_local $0)
+            )
+            (drop
+              (get_local $1)
+            )
           )
         )
       )
@@ -497,8 +655,12 @@
           (set_local $1
             (i32.const 109)
           )
-          (get_local $0)
-          (get_local $1)
+          (drop
+            (get_local $0)
+          )
+          (drop
+            (get_local $1)
+          )
         )
         (block $block15
           (set_local $0
@@ -507,8 +669,12 @@
           (set_local $1
             (i32.const 111)
           )
-          (get_local $0)
-          (get_local $1)
+          (drop
+            (get_local $0)
+          )
+          (drop
+            (get_local $1)
+          )
         )
       )
     )
@@ -520,7 +686,9 @@
         (get_local $2)
         (i32.const 4096)
       )
-      (get_local $0)
+      (drop
+        (get_local $0)
+      )
     )
     (set_local $3
       (get_local $0)
@@ -679,6 +847,8 @@
       )
       (nop)
     )
-    (get_local $0)
+    (drop
+      (get_local $0)
+    )
   )
 )

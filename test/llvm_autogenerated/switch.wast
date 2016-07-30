@@ -4,8 +4,6 @@
   )
   (export "memory" memory)
   (type $FUNCSIG$v (func))
-  (type $1 (func (param i32)))
-  (type $2 (func (param i64)))
   (import $foo0 "env" "foo0")
   (import $foo1 "env" "foo1")
   (import $foo2 "env" "foo2")
@@ -14,7 +12,7 @@
   (import $foo5 "env" "foo5")
   (export "bar32" $bar32)
   (export "bar64" $bar64)
-  (func $bar32 (type $1) (param $0 i32)
+  (func $bar32 (param $0 i32)
     (block $label$0
       (br_if $label$0
         (i32.gt_u
@@ -51,7 +49,7 @@
     )
     (return)
   )
-  (func $bar64 (type $2) (param $0 i64)
+  (func $bar64 (param $0 i64)
     (block $label$0
       (br_if $label$0
         (i64.gt_u

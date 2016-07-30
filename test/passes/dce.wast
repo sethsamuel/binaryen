@@ -284,7 +284,7 @@
     )
     (if
       (i32.const 33)
-      (unreachable.store
+      (i32.store
         (i32.const 0)
         (unreachable)
       )
@@ -298,7 +298,7 @@
     )
     (if
       (i32.const 55)
-      (unreachable.store
+      (i32.store
         (unreachable)
         (unreachable)
       )
