@@ -191,6 +191,16 @@ struct SimplifyLocals : public WalkerPass<LinearExecutionWalker<SimplifyLocals, 
     }
   }
 
+  void visitDrop(Drop* curr) {
+    // collapse drop-tee into set, which can occur if a get was sunk into a tee
+    auto* set = curr->value->dynCast<SetLocal>();
+    if (set) {
+      assert(set->isTee());
+      set->setTee(false);
+      replaceCurrent(set);
+    }
+  }
+
   void checkInvalidations(EffectAnalyzer& effects) {
     // TODO: this is O(bad)
     std::vector<Index> invalidated;
@@ -238,11 +248,15 @@ struct SimplifyLocals : public WalkerPass<LinearExecutionWalker<SimplifyLocals, 
       self->checkInvalidations(effects);
     }
 
-    if (set && !set->isTee()) {
-      // a set without a returned value, so potentially sinkable
-      Index index = set->index;
-      assert(self->sinkables.count(index) == 0);
-      self->sinkables.emplace(std::make_pair(index, SinkableInfo(currp)));
+    if (set) {
+      // we may be a replacement for the current node, update the stack
+      self->expressionStack.pop_back();
+      self->expressionStack.push_back(set);
+      if (!ExpressionAnalyzer::isResultUsed(self->expressionStack, self->getFunction())) {
+        Index index = set->index;
+        assert(self->sinkables.count(index) == 0);
+        self->sinkables.emplace(std::make_pair(index, SinkableInfo(currp)));
+      }
     }
 
     self->expressionStack.pop_back();

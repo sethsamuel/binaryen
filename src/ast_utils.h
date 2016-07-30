@@ -343,7 +343,7 @@ struct ExpressionAnalyzer {
     for (int i = int(stack.size()) - 2; i >= 0; i--) {
       auto* curr = stack[i];
       auto* above = stack[i + 1];
-      // only if and block can drop values (pre-drop expression was added)
+      // only if and block can drop values (pre-drop expression was added) FIXME
       if (curr->is<Block>()) {
         auto* block = curr->cast<Block>();
         for (size_t j = 0; j < block->list.size() - 1; j++) {
@@ -485,6 +485,7 @@ struct ExpressionAnalyzer {
         }
         case Expression::Id::SetLocalId: {
           CHECK(SetLocal, index);
+          CHECK(SetLocal, type); // for tee/set
           PUSH(SetLocal, value);
           break;
         }
