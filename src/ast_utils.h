@@ -277,7 +277,11 @@ struct ExpressionManipulator {
         return builder.makeGetLocal(curr->index, curr->type);
       }
       Expression* visitSetLocal(SetLocal *curr) {
-        return builder.makeSetLocal(curr->index, copy(curr->value));
+        if (curr->isTee()) {
+          return builder.makeTeeLocal(curr->index, copy(curr->value));
+        } else {
+          return builder.makeSetLocal(curr->index, copy(curr->value));
+        }
       }
       Expression* visitGetGlobal(GetGlobal *curr) {
         return builder.makeGetGlobal(curr->index, curr->type);
