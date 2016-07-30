@@ -4,7 +4,6 @@ SET(passes_SOURCES
   DeadCodeElimination.cpp
   DropReturnValues.cpp
   DuplicateFunctionElimination.cpp
-  LowerIfElse.cpp
   MergeBlocks.cpp
   Metrics.cpp
   NameManager.cpp

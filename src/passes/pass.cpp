@@ -66,7 +66,6 @@ void PassRegistry::registerPasses() {
   registerPass("dce", "removes unreachable code", createDeadCodeEliminationPass);
   registerPass("drop-return-values", "stops relying on return values from set_local and store", createDropReturnValuesPass);
   registerPass("duplicate-function-elimination", "removes duplicate functions", createDuplicateFunctionEliminationPass);
-  registerPass("lower-if-else", "lowers if-elses into ifs, blocks and branches", createLowerIfElsePass);
   registerPass("merge-blocks", "merges blocks to their parents", createMergeBlocksPass);
   registerPass("metrics", "reports metrics", createMetricsPass);
   registerPass("nm", "name list", createNameListPass);
