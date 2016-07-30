@@ -180,7 +180,9 @@ struct SimplifyLocals : public WalkerPass<LinearExecutionWalker<SimplifyLocals, 
     auto found = sinkables.find(curr->index);
     if (found != sinkables.end()) {
       // sink it, and nop the origin
-      replaceCurrent(*found->second.item);
+      auto* set = (*found->second.item)->cast<SetLocal>();
+      replaceCurrent(set);
+      set->setTee(true);
       // reuse the getlocal that is dying
       *found->second.item = curr;
       ExpressionManipulator::nop(curr);
@@ -236,15 +238,11 @@ struct SimplifyLocals : public WalkerPass<LinearExecutionWalker<SimplifyLocals, 
       self->checkInvalidations(effects);
     }
 
-    if (set) {
-      // we may be a replacement for the current node, update the stack
-      self->expressionStack.pop_back();
-      self->expressionStack.push_back(set);
-      if (!ExpressionAnalyzer::isResultUsed(self->expressionStack, self->getFunction())) {
-        Index index = set->index;
-        assert(self->sinkables.count(index) == 0);
-        self->sinkables.emplace(std::make_pair(index, SinkableInfo(currp)));
-      }
+    if (set && !set->isTee()) {
+      // a set without a returned value, so potentially sinkable
+      Index index = set->index;
+      assert(self->sinkables.count(index) == 0);
+      self->sinkables.emplace(std::make_pair(index, SinkableInfo(currp)));
     }
 
     self->expressionStack.pop_back();
