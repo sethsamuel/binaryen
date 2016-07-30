@@ -508,7 +508,7 @@ BinaryenExpressionRef BinaryenLoad(BinaryenModuleRef module, uint32_t bytes, int
   ret->finalize();
   return static_cast<Expression*>(ret);
 }
-BinaryenExpressionRef BinaryenStore(BinaryenModuleRef module, uint32_t bytes, uint32_t offset, uint32_t align, BinaryenExpressionRef ptr, BinaryenExpressionRef value) {
+BinaryenExpressionRef BinaryenStore(BinaryenModuleRef module, uint32_t bytes, uint32_t offset, uint32_t align, BinaryenExpressionRef ptr, BinaryenExpressionRef value, BinaryenType type) {
   auto* ret = ((Module*)module)->allocator.alloc<Store>();
 
   if (tracing) {
@@ -521,6 +521,7 @@ BinaryenExpressionRef BinaryenStore(BinaryenModuleRef module, uint32_t bytes, ui
   ret->align = align ? align : bytes;
   ret->ptr = (Expression*)ptr;
   ret->value = (Expression*)value;
+  ret->valueType = WasmType(type);
   ret->finalize();
   return static_cast<Expression*>(ret);
 }

@@ -1002,6 +1002,7 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
         IString name = ast[2][1]->getIString();
         if (functionVariables.has(name)) {
           auto ret = allocator.alloc<SetLocal>();
+          ret->setTee(false);
           ret->index = function->getLocalIndex(ast[2][1]->getIString());
           ret->value = process(ast[3]);
           ret->type = ret->value->type;
@@ -1016,7 +1017,7 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
         ret->align = ret->bytes;
         ret->ptr = builder.makeConst(Literal(int32_t(global.address)));
         ret->value = process(ast[3]);
-        ret->type = global.type;
+        ret->valueType = global.type;
         return ret;
       } else if (ast[2][0] == SUB) {
         Ref target = ast[2];
@@ -1030,7 +1031,7 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
         ret->align = view.bytes;
         ret->ptr = processUnshifted(target[2], view.bytes);
         ret->value = process(ast[3]);
-        ret->type = asmToWasmType(view.type);
+        ret->valueType = asmToWasmType(view.type);
         if (ret->type != ret->value->type) {
           // in asm.js we have some implicit coercions that we must do explicitly here
           if (ret->type == f32 && ret->value->type == f64) {
@@ -1325,6 +1326,7 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
             // No wasm support, so use a temp local
             ensureI32Temp();
             auto set = allocator.alloc<SetLocal>();
+            set->setTee(false);
             set->index = function->getLocalIndex(I32_TEMP);
             set->value = value;
             set->type = i32;

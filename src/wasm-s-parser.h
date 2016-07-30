@@ -562,7 +562,6 @@ private:
       if (str[1] == '6' && str[2] == '4' && (prefix || str[3] == 0)) return f64;
     }
     if (allowError) return none;
-    throw ParseException("unknown type");
     abort();
   }
 
@@ -927,7 +926,7 @@ private:
     auto ret = allocator.alloc<SetLocal>();
     ret->index = getLocalIndex(*s[1]);
     ret->value = parseExpression(s[2]);
-    ret->setTee(true); // FIXME TODO: false, when we switch to the new way
+    ret->setTee(false);
     return ret;
   }
 
@@ -1074,7 +1073,7 @@ private:
   Expression* makeStore(Element& s, WasmType type) {
     const char *extra = strchr(s[0]->c_str(), '.') + 6; // after "type.store"
     auto ret = allocator.alloc<Store>();
-    ret->type = type;
+    ret->valueType = type;
     ret->bytes = getWasmTypeSize(type);
     if (extra[0] == '8') {
       ret->bytes = 1;
@@ -1105,6 +1104,7 @@ private:
     }
     ret->ptr = parseExpression(s[i]);
     ret->value = parseExpression(s[i+1]);
+    ret->finalize();
     return ret;
   }
 

@@ -1161,16 +1161,17 @@ public:
 
 class Store : public SpecificExpression<Expression::StoreId> {
 public:
-  Store() {}
-  Store(MixedArena& allocator) {}
+  Store() : valueType(none) {}
+  Store(MixedArena& allocator) : Store() {}
 
   uint8_t bytes;
   Address offset;
   Address align;
   Expression *ptr, *value;
+  WasmType valueType; // the store never returns a value
 
   void finalize() {
-    type = value->type;
+    assert(valueType != none); // must be set
   }
 };
 

@@ -171,10 +171,11 @@ public:
     ret->type = type;
     return ret;
   }
-  Store* makeStore(unsigned bytes, uint32_t offset, unsigned align, Expression *ptr, Expression *value) {
+  Store* makeStore(unsigned bytes, uint32_t offset, unsigned align, Expression *ptr, Expression *value, WasmType type) {
     auto* ret = allocator.alloc<Store>();
     ret->bytes = bytes; ret->offset = offset; ret->align = align; ret->ptr = ptr; ret->value = value;
-    ret->type = value->type;
+    ret->finalize();
+    assert(isConcreteWasmType(ret->value->type) ? ret->value->type == type : true);
     return ret;
   }
   Const* makeConst(Literal value) {

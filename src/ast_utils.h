@@ -289,7 +289,7 @@ struct ExpressionManipulator {
         return builder.makeLoad(curr->bytes, curr->signed_, curr->offset, curr->align, copy(curr->ptr), curr->type);
       }
       Expression* visitStore(Store *curr) {
-        return builder.makeStore(curr->bytes, curr->offset, curr->align, copy(curr->ptr), copy(curr->value));
+        return builder.makeStore(curr->bytes, curr->offset, curr->align, copy(curr->ptr), copy(curr->value), curr->valueType);
       }
       Expression* visitConst(Const *curr) {
         return builder.makeConst(curr->value);
@@ -509,6 +509,7 @@ struct ExpressionAnalyzer {
           CHECK(Store, bytes);
           CHECK(Store, offset);
           CHECK(Store, align);
+          CHECK(Store, valueType);
           PUSH(Store, ptr);
           PUSH(Store, value);
           break;
@@ -724,6 +725,7 @@ struct ExpressionAnalyzer {
           HASH(Store, bytes);
           HASH(Store, offset);
           HASH(Store, align);
+          HASH(Store, valueType);
           PUSH(Store, ptr);
           PUSH(Store, value);
           break;
