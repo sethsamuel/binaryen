@@ -208,8 +208,8 @@ void test_core() {
     BinaryenLoad(module, 1, 1, 2, 4, BinaryenInt64(), makeInt32(module, 8)),
     BinaryenLoad(module, 4, 0, 0, 0, BinaryenFloat32(), makeInt32(module, 2)),
     BinaryenLoad(module, 8, 0, 2, 8, BinaryenFloat64(), makeInt32(module, 9)),
-    BinaryenStore(module, 4, 0, 0, temp13, temp14),
-    BinaryenStore(module, 8, 2, 4, temp15, temp16),
+    BinaryenStore(module, 4, 0, 0, temp13, temp14, BinaryenInt32()),
+    BinaryenStore(module, 8, 2, 4, temp15, temp16, BinaryenInt64()),
     BinaryenSelect(module, temp10, temp11, temp12),
     BinaryenReturn(module, makeInt32(module, 1337)),
     // TODO: Host
