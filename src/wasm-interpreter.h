@@ -700,9 +700,9 @@ private:
         if (flow.breaking()) return flow;
         NOTE_EVAL1(index);
         NOTE_EVAL1(flow.value);
-        assert(flow.value.type == curr->type);
+        assert(curr->isTee() ? flow.value.type == curr->type : true);
         scope.locals[index] = flow.value;
-        return flow;
+        return curr->isTee() ? flow : Flow();
       }
 
       Flow visitGetGlobal(GetGlobal *curr) {
@@ -737,7 +737,7 @@ private:
         Flow value = visit(curr->value);
         if (value.breaking()) return value;
         instance.externalInterface->store(curr, instance.getFinalAddress(curr, ptr.value), value.value);
-        return value;
+        return Flow();
       }
 
       Flow visitHost(Host *curr) {
