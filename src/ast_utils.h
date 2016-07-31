@@ -795,6 +795,8 @@ struct ExpressionAnalyzer {
 struct AutoDrop : public WalkerPass<PostWalker<AutoDrop, Visitor<AutoDrop>>> {
   bool isFunctionParallel() override { return true; }
 
+  Pass* create() override { return new AutoDrop; }
+
   void visitBlock(Block* curr) {
     if (curr->list.size() <= 1) return;
     for (Index i = 0; i < curr->list.size() - 1; i++) {
