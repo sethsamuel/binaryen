@@ -426,6 +426,7 @@ enum ASTNodes {
   TableSwitch = 0x08,
   Return = 0x09,
   Unreachable = 0x0a,
+  Drop = 0x0b,
   End = 0x0f
 };
 
@@ -1211,6 +1212,11 @@ public:
     if (debug) std::cerr << "zz node: Unreachable" << std::endl;
     o << int8_t(BinaryConsts::Unreachable);
   }
+  void visitDrop(Drop *curr) {
+    if (debug) std::cerr << "zz node: Drop" << std::endl;
+    recurse(curr->value);
+    o << int8_t(BinaryConsts::Drop);
+  }
 };
 
 class WasmBinaryBuilder {
@@ -1713,6 +1719,7 @@ public:
       case BinaryConsts::Return:       visitReturn((curr = allocator.alloc<Return>())->cast<Return>()); break;
       case BinaryConsts::Nop:          visitNop((curr = allocator.alloc<Nop>())->cast<Nop>()); break;
       case BinaryConsts::Unreachable:  visitUnreachable((curr = allocator.alloc<Unreachable>())->cast<Unreachable>()); break;
+      case BinaryConsts::Drop:         visitDrop((curr = allocator.alloc<Drop>())->cast<Drop>()); break;
       case BinaryConsts::End:
       case BinaryConsts::Else:         curr = nullptr; break;
       default: {
@@ -2153,6 +2160,10 @@ public:
   }
   void visitUnreachable(Unreachable *curr) {
     if (debug) std::cerr << "zz node: Unreachable" << std::endl;
+  }
+  void visitDrop(Drop *curr) {
+    if (debug) std::cerr << "zz node: Drop" << std::endl;
+    curr->value = popExpression();
   }
 };
 
