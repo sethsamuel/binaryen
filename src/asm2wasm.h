@@ -788,6 +788,7 @@ void Asm2WasmBuilder::processAsm(Ref ast) {
   };
   PassRunner passRunner(&wasm);
   passRunner.add<FinalizeCalls>(this);
+  passRunner.add<AutoDrop>();
   passRunner.run();
 
   // apply memory growth, if relevant

@@ -21,6 +21,7 @@
 #include "wasm.h"
 #include "wasm-traversal.h"
 #include "wasm-builder.h"
+#include "pass.h"
 
 namespace wasm {
 
@@ -786,6 +787,22 @@ struct ExpressionAnalyzer {
       #undef PUSH
     }
     return digest;
+  }
+};
+
+// Adds drop() operations where necessary. This lets you not worry about adding drop when
+// generating code.
+struct AutoDrop : public WalkerPass<PostWalker<AutoDrop, Visitor<AutoDrop>>> {
+  bool isFunctionParallel() override { return true; }
+
+  void visitBlock(Block* curr) {
+    if (curr->list.size() <= 1) return;
+    for (Index i = 0; i < curr->list.size() - 1; i++) {
+      auto* child = curr->list[i];
+      if (isConcreteWasmType(child->type)) {
+        curr->list[i] = Builder(*getModule()).makeDrop(child);
+      }
+    }
   }
 };
 
