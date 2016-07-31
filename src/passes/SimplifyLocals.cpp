@@ -55,7 +55,9 @@ struct SetLocalRemover : public PostWalker<SetLocalRemover, Visitor<SetLocalRemo
 
   void visitSetLocal(SetLocal *curr) {
     if ((*numGetLocals)[curr->index] == 0) {
-      replaceCurrent(curr->value);
+      auto* value = curr->value;
+      Drop* drop = ExpressionManipulator::convert<SetLocal, Drop>(curr);
+      drop->value = value;
     }
   }
 };
