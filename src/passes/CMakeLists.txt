@@ -2,7 +2,6 @@ SET(passes_SOURCES
   pass.cpp
   CoalesceLocals.cpp
   DeadCodeElimination.cpp
-  DropReturnValues.cpp
   DuplicateFunctionElimination.cpp
   MergeBlocks.cpp
   Metrics.cpp
