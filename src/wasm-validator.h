@@ -74,9 +74,11 @@ public:
   void visitLoop(Loop *curr) {
     if (curr->in.is()) {
       breakTypes.erase(curr->in);
+      breakArities.erase(curr->in);
     }
     if (curr->out.is()) {
       breakTypes.erase(curr->out);
+      breakArities.erase(curr->out);
     }
   }
   void noteBreak(Name name, Expression* value, Expression* curr) {
@@ -346,6 +348,7 @@ public:
         std::cerr << " - " << target.first << '\n';
       }
       breakTypes.clear();
+      breakArities.clear();
     }
   }
 
