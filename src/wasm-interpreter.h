@@ -105,6 +105,7 @@ struct IndentHandler {
 #define NOTE_EVAL2(p0, p1) { doIndent(std::cout, indent); std::cout << "eval in " << indentHandler.name << '('  << p0 << ", " << p1 << ")\n"; }
 #else // WASM_INTERPRETER_DEBUG
 #define NOTE_ENTER(x)
+#define NOTE_ENTER_(x)
 #define NOTE_NAME(p0)
 #define NOTE_EVAL1(p0)
 #define NOTE_EVAL2(p0, p1)
