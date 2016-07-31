@@ -1357,10 +1357,8 @@
                     )
                   )
                 )
-                (get_local $0)
               )
             )
-            (get_local $0)
           )
         )
         (if
@@ -3475,8 +3473,10 @@
                                   (i32.const -1)
                                 )
                                 (block
-                                  (call_import $_sbrk
-                                    (get_local $11)
+                                  (drop
+                                    (call_import $_sbrk
+                                      (get_local $11)
+                                    )
                                   )
                                   (br $label$break$L279)
                                 )
@@ -8381,10 +8381,12 @@
               )
             )
           )
-          (call $_memcpy
-            (get_local $6)
-            (get_local $2)
-            (get_local $0)
+          (drop
+            (call $_memcpy
+              (get_local $6)
+              (get_local $2)
+              (get_local $0)
+            )
           )
           (i32.store
             (get_local $5)
@@ -8521,12 +8523,13 @@
                   )
                 )
                 (if
-                  (tee_local $1
-                    (i32.load offset=56
-                      (get_local $1)
+                  (i32.eqz
+                    (tee_local $1
+                      (i32.load offset=56
+                        (get_local $1)
+                      )
                     )
                   )
-                  (get_local $2)
                   (block
                     (set_local $0
                       (get_local $2)
@@ -8537,7 +8540,6 @@
                 (br $while-in$3)
               )
             )
-            (get_local $0)
           )
           (call_import $___unlock
             (i32.const 36)
@@ -8580,18 +8582,19 @@
               )
             )
             (if
-              (i32.and
-                (tee_local $4
-                  (tee_local $0
-                    (i32.add
-                      (get_local $0)
-                      (i32.const 1)
+              (i32.eqz
+                (i32.and
+                  (tee_local $4
+                    (tee_local $0
+                      (i32.add
+                        (get_local $0)
+                        (i32.const 1)
+                      )
                     )
                   )
+                  (i32.const 3)
                 )
-                (i32.const 3)
               )
-              (get_local $0)
               (block
                 (set_local $2
                   (get_local $0)
@@ -8686,7 +8689,6 @@
               (br $while-in$6)
             )
           )
-          (get_local $1)
         )
         (set_local $5
           (get_local $1)
@@ -8886,19 +8888,21 @@
           )
         )
         (block
-          (call_indirect $FUNCSIG$iiii
-            (i32.add
-              (i32.and
-                (i32.load offset=36
-                  (get_local $0)
+          (drop
+            (call_indirect $FUNCSIG$iiii
+              (i32.add
+                (i32.and
+                  (i32.load offset=36
+                    (get_local $0)
+                  )
+                  (i32.const 7)
                 )
-                (i32.const 7)
+                (i32.const 2)
               )
-              (i32.const 2)
+              (get_local $0)
+              (i32.const 0)
+              (i32.const 0)
             )
-            (get_local $0)
-            (i32.const 0)
-            (i32.const 0)
           )
           (i32.eq
             (i32.load
@@ -9977,8 +9981,10 @@
     )
   )
   (func $_main (result i32)
-    (call $_puts
-      (i32.const 672)
+    (drop
+      (call $_puts
+        (i32.const 672)
+      )
     )
     (i32.const 0)
   )

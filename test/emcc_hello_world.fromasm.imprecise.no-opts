@@ -345,9 +345,11 @@
     (set_local $$retval
       (i32.const 0)
     )
-    (call $_printf
-      (i32.const 672)
-      (get_local $$vararg_buffer)
+    (drop
+      (call $_printf
+        (i32.const 672)
+        (get_local $$vararg_buffer)
+      )
     )
     (i32.store
       (i32.const 8)
@@ -2641,17 +2643,19 @@
                     (get_local $$write)
                   )
                 )
-                (call_indirect $FUNCSIG$iiii
-                  (i32.add
-                    (i32.and
-                      (get_local $$5)
-                      (i32.const 7)
+                (drop
+                  (call_indirect $FUNCSIG$iiii
+                    (i32.add
+                      (i32.and
+                        (get_local $$5)
+                        (i32.const 7)
+                      )
+                      (i32.const 2)
                     )
-                    (i32.const 2)
+                    (get_local $$f)
+                    (i32.const 0)
+                    (i32.const 0)
                   )
-                  (get_local $$f)
-                  (i32.const 0)
-                  (i32.const 0)
                 )
                 (set_local $$6
                   (i32.load
@@ -3136,10 +3140,12 @@
               )
             )
           )
-          (call $_memcpy
-            (get_local $$9)
-            (get_local $$s$addr$0)
-            (get_local $$l$addr$0)
+          (drop
+            (call $_memcpy
+              (get_local $$9)
+              (get_local $$s$addr$0)
+              (get_local $$l$addr$0)
+            )
           )
           (set_local $$10
             (i32.load
@@ -4544,17 +4550,19 @@
             (get_local $$write)
           )
         )
-        (call_indirect $FUNCSIG$iiii
-          (i32.add
-            (i32.and
-              (get_local $$2)
-              (i32.const 7)
+        (drop
+          (call_indirect $FUNCSIG$iiii
+            (i32.add
+              (i32.and
+                (get_local $$2)
+                (i32.const 7)
+              )
+              (i32.const 2)
             )
-            (i32.const 2)
+            (get_local $$f)
+            (i32.const 0)
+            (i32.const 0)
           )
-          (get_local $$f)
-          (i32.const 0)
-          (i32.const 0)
         )
         (set_local $$3
           (i32.load
@@ -12775,10 +12783,12 @@
                                             (br $do-once$122)
                                           )
                                         )
-                                        (call $___fwritex
-                                          (i32.const 4143)
-                                          (i32.const 1)
-                                          (get_local $$f)
+                                        (drop
+                                          (call $___fwritex
+                                            (i32.const 4143)
+                                            (i32.const 1)
+                                            (get_local $$f)
+                                          )
                                         )
                                         (set_local $$s753$2$i
                                           (get_local $$incdec$ptr776$i)
@@ -13109,10 +13119,12 @@
                       (if
                         (get_local $$tobool$i$407$i)
                         (block
-                          (call $___fwritex
-                            (get_local $$prefix$0$i)
-                            (get_local $$pl$1$i)
-                            (get_local $$f)
+                          (drop
+                            (call $___fwritex
+                              (get_local $$prefix$0$i)
+                              (get_local $$pl$1$i)
+                              (get_local $$f)
+                            )
                           )
                           (set_local $$$pre$i
                             (i32.load
@@ -16201,10 +16213,12 @@
               (get_local $$sub)
             )
           )
-          (call $_memset
-            (get_local $$pad)
-            (get_local $$c)
-            (get_local $$cond)
+          (drop
+            (call $_memset
+              (get_local $$pad)
+              (get_local $$c)
+              (get_local $$cond)
+            )
           )
           (set_local $$cmp3$14
             (i32.gt_u
@@ -16251,10 +16265,12 @@
                 (if
                   (get_local $$tobool$i18)
                   (block
-                    (call $___fwritex
-                      (get_local $$pad)
-                      (i32.const 256)
-                      (get_local $$f)
+                    (drop
+                      (call $___fwritex
+                        (get_local $$pad)
+                        (i32.const 256)
+                        (get_local $$f)
+                      )
                     )
                     (set_local $$$pre
                       (i32.load
@@ -22951,8 +22967,10 @@
                           (if
                             (get_local $$cmp108$i)
                             (block
-                              (call_import $_sbrk
-                                (get_local $$sub112$i)
+                              (drop
+                                (call_import $_sbrk
+                                  (get_local $$sub112$i)
+                                )
                               )
                               (br $label$break$L279)
                             )
@@ -31269,14 +31287,16 @@
         (get_local $$2$1)
       )
     )
-    (call $___udivmoddi4
-      (get_local $$4$0)
-      (get_local $$4$1)
-      (get_local $$6$0)
-      (i32.load
-        (i32.const 168)
+    (drop
+      (call $___udivmoddi4
+        (get_local $$4$0)
+        (get_local $$4$1)
+        (get_local $$6$0)
+        (i32.load
+          (i32.const 168)
+        )
+        (get_local $$rem)
       )
-      (get_local $$rem)
     )
     (set_local $$10$0
       (call $_i64Subtract
@@ -31413,12 +31433,14 @@
     (set_local $$rem
       (get_local $__stackBase__)
     )
-    (call $___udivmoddi4
-      (get_local $$a$0)
-      (get_local $$a$1)
-      (get_local $$b$0)
-      (get_local $$b$1)
-      (get_local $$rem)
+    (drop
+      (call $___udivmoddi4
+        (get_local $$a$0)
+        (get_local $$a$1)
+        (get_local $$b$0)
+        (get_local $$b$1)
+        (get_local $$rem)
+      )
     )
     (i32.store
       (i32.const 8)
@@ -32459,11 +32481,13 @@
               )
             )
           )
-          (call $_i64Subtract
-            (get_local $$137$0)
-            (get_local $$137$1)
-            (get_local $$r_sroa_0_0_insert_insert42$0)
-            (get_local $$r_sroa_0_0_insert_insert42$1)
+          (drop
+            (call $_i64Subtract
+              (get_local $$137$0)
+              (get_local $$137$1)
+              (get_local $$r_sroa_0_0_insert_insert42$0)
+              (get_local $$r_sroa_0_0_insert_insert42$1)
+            )
           )
           (set_local $$150$1
             (i32.load
