@@ -1037,7 +1037,7 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
         ret->finalize();
         if (ret->valueType != ret->value->type) {
           // in asm.js we have some implicit coercions that we must do explicitly here
-          if (ret->type == f32 && ret->value->type == f64) {
+          if (ret->valueType == f32 && ret->value->type == f64) {
             auto conv = allocator.alloc<Unary>();
             conv->op = DemoteFloat64;
             conv->value = ret->value;
