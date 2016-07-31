@@ -412,6 +412,7 @@ enum ASTNodes {
   CallFunction = 0x16,
   CallIndirect = 0x17,
   CallImport = 0x18,
+  TeeLocal = 0x19,
   GetGlobal = 0x1a,
   SetGlobal = 0x1b,
 
@@ -932,9 +933,9 @@ public:
     o << int8_t(BinaryConsts::GetLocal) << U32LEB(mappedLocals[curr->index]);
   }
   void visitSetLocal(SetLocal *curr) {
-    if (debug) std::cerr << "zz node: SetLocal" << std::endl;
+    if (debug) std::cerr << "zz node: Set|TeeLocal" << std::endl;
     recurse(curr->value);
-    o << int8_t(BinaryConsts::SetLocal) << U32LEB(mappedLocals[curr->index]);
+    o << int8_t(curr->isTee() ? BinaryConsts::TeeLocal : BinaryConsts::SetLocal) << U32LEB(mappedLocals[curr->index]);
   }
   void visitGetGlobal(GetGlobal *curr) {
     if (debug) std::cerr << "zz node: GetGlobal " << (o.size() + 1) << std::endl;
@@ -1712,7 +1713,8 @@ public:
       case BinaryConsts::CallImport:   visitCallImport((curr = allocator.alloc<CallImport>())->cast<CallImport>()); break;
       case BinaryConsts::CallIndirect: visitCallIndirect((curr = allocator.alloc<CallIndirect>())->cast<CallIndirect>()); break;
       case BinaryConsts::GetLocal:     visitGetLocal((curr = allocator.alloc<GetLocal>())->cast<GetLocal>()); break;
-      case BinaryConsts::SetLocal:     visitSetLocal((curr = allocator.alloc<SetLocal>())->cast<SetLocal>()); break;
+      case BinaryConsts::TeeLocal:
+      case BinaryConsts::SetLocal:     visitSetLocal((curr = allocator.alloc<SetLocal>())->cast<SetLocal>(), code); break;
       case BinaryConsts::GetGlobal:    visitGetGlobal((curr = allocator.alloc<GetGlobal>())->cast<GetGlobal>()); break;
       case BinaryConsts::SetGlobal:    visitSetGlobal((curr = allocator.alloc<SetGlobal>())->cast<SetGlobal>()); break;
       case BinaryConsts::Select:       visitSelect((curr = allocator.alloc<Select>())->cast<Select>()); break;
@@ -1907,12 +1909,13 @@ public:
     assert(curr->index < currFunction->getNumLocals());
     curr->type = currFunction->getLocalType(curr->index);
   }
-  void visitSetLocal(SetLocal *curr) {
-    if (debug) std::cerr << "zz node: SetLocal" << std::endl;
+  void visitSetLocal(SetLocal *curr, uint8_t code) {
+    if (debug) std::cerr << "zz node: Set|TeeLocal" << std::endl;
     curr->index = getU32LEB();
     assert(curr->index < currFunction->getNumLocals());
     curr->value = popExpression();
     curr->type = curr->value->type;
+    curr->setTee(code == BinaryConsts::TeeLocal);
   }
   void visitGetGlobal(GetGlobal *curr) {
     if (debug) std::cerr << "zz node: GetGlobal " << pos << std::endl;
