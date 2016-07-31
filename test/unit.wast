@@ -176,11 +176,11 @@
     (set_local $J
       (f64.sub
         (block $block0
-          (f64.const 0.1)
+          (drop (f64.const 0.1))
           (f64.const 5.1)
         )
         (block $block1
-          (f64.const 3.2)
+          (drop (f64.const 3.2))
           (f64.const 4.2)
         )
       )
@@ -302,14 +302,16 @@
     (local $y f32)
     (local $z f64)
     (block $block0
-      (f32.demote/f64
-        (get_local $z)
+      (drop 
+        (f32.demote/f64
+          (get_local $z)
+        )
       )
-      (get_local $y)
-      (f32.const 5)
-      (f32.const 0)
-      (f32.const 5)
-      (f32.const 0)
+      (drop (get_local $y))
+      (drop (f32.const 5))
+      (drop (f32.const 0))
+      (drop (f32.const 5))
+      (drop (f32.const 0))
     )
   )
   (func $negZero (type $4) (result f64)
@@ -401,14 +403,14 @@
   )
   (func $block_and_after (type $5) (result i32)
     (block $waka
-      (i32.const 1)
+      (drop (i32.const 1))
       (br $waka)
     )
     (i32.const 0)
   )
   (func $loop-roundtrip (type $7) (param $0 f64) (result f64)
     (loop $loop-out0 $loop-in1
-      (get_local $0)
+      (drop (get_local $0))
       (get_local $0)
     )
   )
