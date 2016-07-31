@@ -21,24 +21,36 @@
     (local $7 i32)
     (local $8 i32)
     (nop)
-    (i32.const 5)
+    (drop
+      (i32.const 5)
+    )
     (block $block0
       (nop)
-      (i32.const 7)
+      (drop
+        (i32.const 7)
+      )
     )
     (nop)
-    (i32.const 11)
-    (i32.const 9)
+    (drop
+      (i32.const 11)
+    )
+    (drop
+      (i32.const 9)
+    )
     (drop
       (get_local $y)
     )
     (block $block1
-      (i32.const 8)
+      (drop
+        (i32.const 8)
+      )
       (drop
         (get_local $y)
       )
     )
-    (i32.const 11)
+    (drop
+      (i32.const 11)
+    )
     (drop
       (get_local $y)
     )
@@ -48,27 +60,53 @@
     (nop)
     (nop)
     (nop)
-    (i32.const 17)
+    (drop
+      (i32.const 17)
+    )
     (block $block2
       (nop)
       (nop)
-      (i32.const 1)
-      (i32.const 2)
-      (i32.const 3)
-      (i32.const 4)
+      (drop
+        (i32.const 1)
+      )
+      (drop
+        (i32.const 2)
+      )
+      (drop
+        (i32.const 3)
+      )
+      (drop
+        (i32.const 4)
+      )
       (nop)
       (nop)
-      (i32.const 6)
-      (i32.const 5)
-      (i32.const 7)
-      (i32.const 8)
+      (drop
+        (i32.const 6)
+      )
+      (drop
+        (i32.const 5)
+      )
+      (drop
+        (i32.const 7)
+      )
+      (drop
+        (i32.const 8)
+      )
       (nop)
       (nop)
       (call_import $waka)
-      (i32.const 9)
-      (i32.const 10)
-      (i32.const 11)
-      (i32.const 12)
+      (drop
+        (i32.const 9)
+      )
+      (drop
+        (i32.const 10)
+      )
+      (drop
+        (i32.const 11)
+      )
+      (drop
+        (i32.const 12)
+      )
       (nop)
       (nop)
       (drop
@@ -76,18 +114,30 @@
           (i32.const 24)
         )
       )
-      (i32.const 13)
-      (i32.const 14)
-      (i32.const 15)
-      (i32.const 16)
+      (drop
+        (i32.const 13)
+      )
+      (drop
+        (i32.const 14)
+      )
+      (drop
+        (i32.const 15)
+      )
+      (drop
+        (i32.const 16)
+      )
       (nop)
       (nop)
       (i32.store
         (i32.const 48)
         (i32.const 96)
       )
-      (i32.const 17)
-      (i32.const 18)
+      (drop
+        (i32.const 17)
+      )
+      (drop
+        (i32.const 18)
+      )
     )
     (block $block3
       (nop)
@@ -252,14 +302,16 @@
     (block $out-of-block
       (nop)
       (nop)
-      (block $b
-        (block $c
-          (br $b
-            (i32.const 1337)
+      (drop
+        (block $b
+          (block $c
+            (br $b
+              (i32.const 1337)
+            )
           )
+          (nop)
+          (i32.const 9876)
         )
-        (nop)
-        (i32.const 9876)
       )
     )
     (block $loopey
@@ -320,7 +372,9 @@
       (get_local $bi3)
       (get_local $di3)
     )
-    (i32.const 456)
+    (drop
+      (i32.const 456)
+    )
   )
   (func $___remdi3 (type $FUNCSIG$iiiii) (param $$a$0 i32) (param $$a$1 i32) (param $$b$0 i32) (param $$b$1 i32) (result i32)
     (local $$1$1 i32)
@@ -593,7 +647,9 @@
       (get_local $r)
       (get_local $t)
     )
-    (get_local $m)
+    (drop
+      (get_local $m)
+    )
     (drop
       (get_local $t)
     )

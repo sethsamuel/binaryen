@@ -142,7 +142,9 @@
     (if
       (i32.const 1)
       (block
-        (i32.const 123)
+        (drop
+          (i32.const 123)
+        )
         (unreachable)
       )
     )
@@ -157,22 +159,30 @@
     (if
       (i32.const -1)
       (block
-        (i32.const 123)
-        (i32.const 456)
+        (drop
+          (i32.const 123)
+        )
+        (drop
+          (i32.const 456)
+        )
         (unreachable)
       )
     )
     (if
       (i32.const -2)
       (block
-        (i32.const 139)
+        (drop
+          (i32.const 139)
+        )
         (unreachable)
       )
     )
     (if
       (i32.const -3)
       (block
-        (i32.const 246)
+        (drop
+          (i32.const 246)
+        )
         (unreachable)
       )
     )
@@ -193,7 +203,9 @@
     (if
       (i32.const 33)
       (block
-        (i32.const 0)
+        (drop
+          (i32.const 0)
+        )
         (unreachable)
       )
     )
@@ -221,7 +233,9 @@
       (i32.const 88)
       (drop
         (block
-          (i32.const 0)
+          (drop
+            (i32.const 0)
+          )
           (unreachable)
         )
       )
@@ -234,8 +248,12 @@
       (i32.const 100)
       (drop
         (block
-          (i32.const 123)
-          (i32.const 456)
+          (drop
+            (i32.const 123)
+          )
+          (drop
+            (i32.const 456)
+          )
           (unreachable)
         )
       )
@@ -244,7 +262,9 @@
       (i32.const 101)
       (drop
         (block
-          (i32.const 123)
+          (drop
+            (i32.const 123)
+          )
           (unreachable)
         )
       )
