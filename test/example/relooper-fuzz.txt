@@ -463,7 +463,9 @@
         (call_import $print
           (i32.const 8)
         )
-        (call $check)
+        (drop
+          (call $check)
+        )
       )
     )
     (loop $shape$3$continue
@@ -530,7 +532,9 @@
       (call_import $print
         (i32.const 2)
       )
-      (call $check)
+      (drop
+        (call $check)
+      )
       (set_local $0
         (i32.const 6)
       )

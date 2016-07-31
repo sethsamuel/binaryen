@@ -51,6 +51,13 @@ public:
       }
       breakTypes.erase(curr->name);
     }
+    if (curr->list.size() > 1) {
+      for (Index i = 0; i < curr->list.size() - 1; i++) {
+        if (!shouldBeTrue(!isConcreteWasmType(curr->list[i]->type), curr, "non-final block elements returning a value must be drop()ed (binaryen's autodrop option might help you)")) {
+          std::cerr << "(on index " << i << ")\n";
+        }
+      }
+    }
   }
   void visitIf(If *curr) {
     shouldBeTrue(curr->condition->type == unreachable || curr->condition->type == i32 || curr->condition->type == i64, curr, "if condition must be valid");

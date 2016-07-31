@@ -368,6 +368,11 @@ int BinaryenModuleValidate(BinaryenModuleRef module);
 // Run the standard optimization passes on the module.
 void BinaryenModuleOptimize(BinaryenModuleRef module);
 
+// Auto-generate drop() operations where needed. This lets you generate code without
+// worrying about where they are needed. (It is more efficient to do it yourself,
+// but simpler to use autodrop).
+void BinaryenModuleAutoDrop(BinaryenModuleRef module);
+
 // Serialize a module into binary form.
 // @return how many bytes were written. This will be less than or equal to bufferSize
 size_t BinaryenModuleWrite(BinaryenModuleRef module, char* output, size_t outputSize);

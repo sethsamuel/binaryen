@@ -854,6 +854,17 @@ void BinaryenModuleOptimize(BinaryenModuleRef module) {
   passRunner.run();
 }
 
+void BinaryenModuleAutoDrop(BinaryenModuleRef module) {
+  if (tracing) {
+    std::cout << "  BinaryenModuleAutoDrop(the_module);\n";
+  }
+
+  Module* wasm = (Module*)module;
+  PassRunner passRunner(wasm);
+  passRunner.add<AutoDrop>();
+  passRunner.run();
+}
+
 size_t BinaryenModuleWrite(BinaryenModuleRef module, char* output, size_t outputSize) {
   if (tracing) {
     std::cout << "  // BinaryenModuleWrite\n";

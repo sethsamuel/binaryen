@@ -489,13 +489,17 @@
         (call_import $print
           (i32.const 3)
         )
-        (call $check)
+        (drop
+          (call $check)
+        )
         (br $shape$6$continue)
       )
     )
     (call_import $print
       (i32.const 9)
     )
-    (call $check)
+    (drop
+      (call $check)
+    )
   )
 )
