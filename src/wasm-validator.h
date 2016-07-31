@@ -31,6 +31,7 @@ struct WasmValidator : public PostWalker<WasmValidator, Visitor<WasmValidator>> 
   bool validateWebConstraints = false;
 
   std::map<Name, WasmType> breakTypes; // breaks to a label must all have the same type, and the right type
+  std::map<Name, Index> breakArities;
   WasmType returnType = unreachable; // type used in returns
 
 public:
@@ -49,7 +50,15 @@ public:
       if (breakTypes.count(curr->name) > 0 && isConcreteWasmType(breakTypes[curr->name]) && isConcreteWasmType(curr->type)) {
         shouldBeEqual(curr->type, breakTypes[curr->name], curr, "block+breaks must have right type if breaks return a value");
       }
+      if (curr->list.size() > 0) {
+        auto last = curr->list.back()->type;
+        if (isConcreteWasmType(last) && breakTypes.count(curr->name) > 0 && breakTypes[curr->name] != unreachable) {
+          shouldBeEqual(last, breakTypes[curr->name], curr, "block+breaks must have right type if block ends with a reachable value");
+        }
+      }
+      shouldBeTrue(breakArities[curr->name] != Index(-1), curr, "break arities must match");
       breakTypes.erase(curr->name);
+      breakArities.erase(curr->name);
     }
     if (curr->list.size() > 1) {
       for (Index i = 0; i < curr->list.size() - 1; i++) {
@@ -70,13 +79,17 @@ public:
       breakTypes.erase(curr->out);
     }
   }
-  void noteBreak(Name name, Expression* value) {
+  void noteBreak(Name name, Expression* value, Expression* curr) {
     WasmType valueType = none;
+    Index arity = 0;
     if (value) {
       valueType = value->type;
+      shouldBeUnequal(valueType, none, curr, "breaks must have a valid value");
+      arity = 1;
     }
     if (breakTypes.count(name) == 0) {
       breakTypes[name] = valueType;
+      breakArities[name] = arity;
     } else {
       if (breakTypes[name] == unreachable) {
         breakTypes[name] = valueType;
@@ -85,19 +98,22 @@ public:
           breakTypes[name] = none; // a poison value that must not be consumed
         }
       }
+      if (arity != breakArities[name]) {
+        breakArities[name] = Index(-1); // a poison value
+      }
     }
   }
   void visitBreak(Break *curr) {
-    noteBreak(curr->name, curr->value);
+    noteBreak(curr->name, curr->value, curr);
     if (curr->condition) {
       shouldBeTrue(curr->condition->type == unreachable || curr->condition->type == i32, curr, "break condition must be i32");
     }
   }
   void visitSwitch(Switch *curr) {
     for (auto& target : curr->targets) {
-      noteBreak(target, curr->value);
+      noteBreak(target, curr->value, curr);
     }
-    noteBreak(curr->default_, curr->value);
+    noteBreak(curr->default_, curr->value, curr);
     shouldBeTrue(curr->condition->type == unreachable || curr->condition->type == i32, curr, "br_table condition must be i32");
   }
   void visitCall(Call *curr) {
@@ -278,13 +294,11 @@ public:
   void visitFunction(Function *curr) {
     // if function has no result, it is ignored
     // if body is unreachable, it might be e.g. a return
-    if (curr->result != none) {
-      if (curr->body->type != unreachable) {
-        shouldBeEqual(curr->result, curr->body->type, curr->body, "function body type must match, if function returns");
-      }
-      if (returnType != unreachable) {
-        shouldBeEqual(curr->result, returnType, curr->body, "function result must match, if function returns");
-      }
+    if (curr->body->type != unreachable) {
+      shouldBeEqual(curr->result, curr->body->type, curr->body, "function body type must match, if function returns");
+    }
+    if (returnType != unreachable) {
+      shouldBeEqual(curr->result, returnType, curr->body, "function result must match, if function returns");
     }
     returnType = unreachable;
   }
