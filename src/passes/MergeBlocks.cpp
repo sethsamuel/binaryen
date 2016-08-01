@@ -74,12 +74,15 @@ struct MergeBlocks : public WalkerPass<PostWalker<MergeBlocks, Visitor<MergeBloc
 
   void visitBlock(Block *curr) {
     bool more = true;
+    bool changed = false;
     while (more) {
       more = false;
       for (size_t i = 0; i < curr->list.size(); i++) {
         Block* child = curr->list[i]->dynCast<Block>();
         if (!child) {
-          // if we have a child that is (drop (block ..)) then we can move the drop into the block, allowing more merging
+          // TODO: if we have a child that is (drop (block ..)) then we can move the drop into the block, allowing more merging,
+          // but we must also drop values from brs
+          /*
           auto* drop = curr->list[i]->dynCast<Drop>();
           if (drop) {
             child = drop->value->dynCast<Block>();
@@ -90,6 +93,7 @@ struct MergeBlocks : public WalkerPass<PostWalker<MergeBlocks, Visitor<MergeBloc
               curr->list[i] = child;
             }
           }
+          */
         }
         if (!child) continue;
         if (child->name.is()) continue; // named blocks can have breaks to them (and certainly do, if we ran RemoveUnusedNames and RemoveUnusedBrs)
@@ -105,9 +109,11 @@ struct MergeBlocks : public WalkerPass<PostWalker<MergeBlocks, Visitor<MergeBloc
         }
         curr->list = merged;
         more = true;
+        changed = true;
         break;
       }
     }
+    if (changed) curr->finalize();
   }
 
   Block* optimize(Expression* curr, Expression*& child, Block* outer = nullptr, Expression** dependency1 = nullptr, Expression** dependency2 = nullptr) {

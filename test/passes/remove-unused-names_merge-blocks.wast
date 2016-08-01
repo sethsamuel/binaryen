@@ -671,20 +671,25 @@
           (i32.const 20)
         )
       )
-      (br_table $out $out
-        (block $block5
-          (drop
-            (i32.const 10)
+      (drop
+        (block $out2
+          (br_table $out2 $out2
+            (block $block5
+              (drop
+                (i32.const 10)
+              )
+              (i32.const 20)
+            )
+            (block $block6
+              (drop
+                (i32.const 30)
+              )
+              (i32.const 40)
+            )
           )
-          (i32.const 20)
-        )
-        (block $block6
-          (drop
-            (i32.const 30)
-          )
-          (i32.const 40)
         )
       )
+      (unreachable)
     )
   )
   (func $calls (type $3)

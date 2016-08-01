@@ -30,8 +30,16 @@ struct WasmValidator : public PostWalker<WasmValidator, Visitor<WasmValidator>> 
   bool valid = true;
   bool validateWebConstraints = false;
 
-  std::map<Name, WasmType> breakTypes; // breaks to a label must all have the same type, and the right type
-  std::map<Name, Index> breakArities;
+  struct BreakInfo {
+    WasmType type;
+    Index arity;
+    BreakInfo() {}
+    BreakInfo(WasmType type, Index arity) : type(type), arity(arity) {}
+  };
+
+  std::map<Name, std::vector<Expression*>> breakTargets; // more than one block/loop may use a label name, so stack them
+  std::map<Expression*, BreakInfo> breakInfos;
+
   WasmType returnType = unreachable; // type used in returns
 
 public:
@@ -43,44 +51,66 @@ public:
 
   // visitors
 
+  static void visitPreBlock(WasmValidator* self, Expression** currp) {
+    auto* curr = (*currp)->cast<Block>();
+    if (curr->name.is()) self->breakTargets[curr->name].push_back(curr);
+  }
+
   void visitBlock(Block *curr) {
     // if we are break'ed to, then the value must be right for us
     if (curr->name.is()) {
-      // none or unreachable means a poison value that we should ignore - if consumed, it will error
-      if (breakTypes.count(curr->name) > 0 && isConcreteWasmType(breakTypes[curr->name]) && isConcreteWasmType(curr->type)) {
-        shouldBeEqual(curr->type, breakTypes[curr->name], curr, "block+breaks must have right type if breaks return a value");
-      }
-      if (curr->list.size() > 0) {
-        auto last = curr->list.back()->type;
-        if (isConcreteWasmType(last) && breakTypes.count(curr->name) > 0 && breakTypes[curr->name] != unreachable) {
-          shouldBeEqual(last, breakTypes[curr->name], curr, "block+breaks must have right type if block ends with a reachable value");
+      if (breakInfos.count(curr) > 0) {
+        // none or unreachable means a poison value that we should ignore - if consumed, it will error
+        if (isConcreteWasmType(breakInfos[curr].type) && isConcreteWasmType(curr->type)) {
+          shouldBeEqual(curr->type, breakInfos[curr].type, curr, "block+breaks must have right type if breaks return a value");
         }
+        if (curr->list.size() > 0) {
+          auto last = curr->list.back()->type;
+          if (isConcreteWasmType(last) && breakInfos[curr].type != unreachable) {
+            shouldBeEqual(last, breakInfos[curr].type, curr, "block+breaks must have right type if block ends with a reachable value");
+          }
+        }
+        shouldBeTrue(breakInfos[curr].arity != Index(-1), curr, "break arities must match");
       }
-      shouldBeTrue(breakArities[curr->name] != Index(-1), curr, "break arities must match");
-      breakTypes.erase(curr->name);
-      breakArities.erase(curr->name);
+      breakTargets[curr->name].pop_back();
     }
     if (curr->list.size() > 1) {
       for (Index i = 0; i < curr->list.size() - 1; i++) {
         if (!shouldBeTrue(!isConcreteWasmType(curr->list[i]->type), curr, "non-final block elements returning a value must be drop()ed (binaryen's autodrop option might help you)")) {
-          std::cerr << "(on index " << i << ")\n";
+          std::cerr << "(on index " << i << ":\n" << curr->list[i] << "\n), type: " << curr->list[i]->type << "\n";
         }
       }
     }
   }
+
+  static void visitPreLoop(WasmValidator* self, Expression** currp) {
+    auto* curr = (*currp)->cast<Loop>();
+    if (curr->in.is()) self->breakTargets[curr->in].push_back(curr);
+    if (curr->out.is()) self->breakTargets[curr->out].push_back(curr);
+  }
+
+  void visitLoop(Loop *curr) {
+    if (curr->in.is()) {
+      breakTargets[curr->in].pop_back();
+    }
+    if (curr->out.is()) {
+      breakTargets[curr->out].pop_back();
+    }
+  }
+
   void visitIf(If *curr) {
     shouldBeTrue(curr->condition->type == unreachable || curr->condition->type == i32 || curr->condition->type == i64, curr, "if condition must be valid");
   }
-  void visitLoop(Loop *curr) {
-    if (curr->in.is()) {
-      breakTypes.erase(curr->in);
-      breakArities.erase(curr->in);
-    }
-    if (curr->out.is()) {
-      breakTypes.erase(curr->out);
-      breakArities.erase(curr->out);
-    }
+
+  // override scan to add a pre and a post check task to all nodes
+  static void scan(WasmValidator* self, Expression** currp) {
+    PostWalker<WasmValidator, Visitor<WasmValidator>>::scan(self, currp);
+
+    auto* curr = *currp;
+    if (curr->is<Block>()) self->pushTask(visitPreBlock, currp);
+    if (curr->is<Loop>()) self->pushTask(visitPreLoop, currp);
   }
+
   void noteBreak(Name name, Expression* value, Expression* curr) {
     WasmType valueType = none;
     Index arity = 0;
@@ -89,19 +119,21 @@ public:
       shouldBeUnequal(valueType, none, curr, "breaks must have a valid value");
       arity = 1;
     }
-    if (breakTypes.count(name) == 0) {
-      breakTypes[name] = valueType;
-      breakArities[name] = arity;
+    if (!shouldBeTrue(breakTargets[name].size() > 0, curr, "all break targets must be valid")) return;
+    auto* target = breakTargets[name].back();
+    if (breakInfos.count(target) == 0) {
+      breakInfos[target] = BreakInfo(valueType, arity);
     } else {
-      if (breakTypes[name] == unreachable) {
-        breakTypes[name] = valueType;
+      auto& info = breakInfos[target];
+      if (info.type == unreachable) {
+        info.type = valueType;
       } else if (valueType != unreachable) {
-        if (valueType != breakTypes[name]) {
-          breakTypes[name] = none; // a poison value that must not be consumed
+        if (valueType != info.type) {
+          info.type = none; // a poison value that must not be consumed
         }
       }
-      if (arity != breakArities[name]) {
-        breakArities[name] = Index(-1); // a poison value
+      if (arity != info.arity) {
+        info.arity = Index(-1); // a poison value
       }
     }
   }
@@ -343,13 +375,6 @@ public:
 
   void doWalkFunction(Function* func) {
     PostWalker<WasmValidator, Visitor<WasmValidator>>::doWalkFunction(func);
-    if (!shouldBeTrue(breakTypes.size() == 0, "break targets", "all break targets must be valid")) {
-      for (auto& target : breakTypes) {
-        std::cerr << " - " << target.first << '\n';
-      }
-      breakTypes.clear();
-      breakArities.clear();
-    }
   }
 
 private:
