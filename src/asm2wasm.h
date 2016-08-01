@@ -798,7 +798,7 @@ void Asm2WasmBuilder::processAsm(Ref ast) {
     wasm.addFunction(builder.makeFunction(
       GROW_WASM_MEMORY,
       { { NEW_SIZE, i32 } },
-      none,
+      i32,
       {},
       builder.makeHost(
         GrowMemory,

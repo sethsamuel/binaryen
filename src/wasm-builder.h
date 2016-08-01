@@ -213,6 +213,7 @@ public:
     ret->op = op;
     ret->nameOperand = nameOperand;
     ret->operands.set(operands);
+    ret->finalize();
     return ret;
   }
   Unreachable* makeUnreachable() {
