@@ -350,23 +350,27 @@
     (local $y f32)
     (local $z f64)
     (drop
-      (f32.demote/f64
-        (get_local $z)
+      (block
+        (drop
+          (f32.demote/f64
+            (get_local $z)
+          )
+        )
+        (drop
+          (get_local $y)
+        )
+        (drop
+          (f32.const 5)
+        )
+        (drop
+          (f32.const 0)
+        )
+        (drop
+          (f32.const 5)
+        )
+        (f32.const 0)
       )
     )
-    (drop
-      (get_local $y)
-    )
-    (drop
-      (f32.const 5)
-    )
-    (drop
-      (f32.const 0)
-    )
-    (drop
-      (f32.const 5)
-    )
-    (f32.const 0)
   )
   (func $negZero (result f64)
     (return
@@ -439,9 +443,11 @@
   )
   (func $___syscall_ret
     (local $$0 i32)
-    (i32.gt_u
-      (get_local $$0)
-      (i32.const -4096)
+    (drop
+      (i32.gt_u
+        (get_local $$0)
+        (i32.const -4096)
+      )
     )
   )
   (func $smallCompare (result i32)
@@ -578,25 +584,29 @@
   (func $bitcasts (param $i i32) (param $f f32)
     (local $d f64)
     (drop
-      (f32.reinterpret/i32
-        (get_local $i)
-      )
-    )
-    (drop
-      (f64.promote/f32
-        (f32.reinterpret/i32
-          (get_local $i)
+      (block
+        (drop
+          (f32.reinterpret/i32
+            (get_local $i)
+          )
         )
-      )
-    )
-    (drop
-      (i32.reinterpret/f32
-        (get_local $f)
-      )
-    )
-    (i32.reinterpret/f32
-      (f32.demote/f64
-        (get_local $d)
+        (drop
+          (f64.promote/f32
+            (f32.reinterpret/i32
+              (get_local $i)
+            )
+          )
+        )
+        (drop
+          (i32.reinterpret/f32
+            (get_local $f)
+          )
+        )
+        (i32.reinterpret/f32
+          (f32.demote/f64
+            (get_local $d)
+          )
+        )
       )
     )
   )
@@ -763,10 +773,14 @@
     )
   )
   (func $forgetMe
-    (f64.const 123.456)
+    (drop
+      (f64.const 123.456)
+    )
   )
   (func $exportMe
-    (f64.const -3.14159)
+    (drop
+      (f64.const -3.14159)
+    )
   )
   (func $zeroInit (param $x i32)
     (local $y i32)

@@ -806,6 +806,12 @@ struct AutoDrop : public WalkerPass<PostWalker<AutoDrop, Visitor<AutoDrop>>> {
       }
     }
   }
+
+  void visitFunction(Function* curr) {
+    if (curr->result == none && isConcreteWasmType(curr->body->type)) {
+      curr->body = Builder(*getModule()).makeDrop(curr->body);
+    }
+  }
 };
 
 } // namespace wasm

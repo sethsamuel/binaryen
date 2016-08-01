@@ -139,12 +139,14 @@
     )
   )
   (func $hexLiterals (type $FUNCSIG$v)
-    (i32.add
+    (drop
       (i32.add
-        (i32.const 0)
-        (i32.const 313249263)
+        (i32.add
+          (i32.const 0)
+          (i32.const 313249263)
+        )
+        (i32.const -19088752)
       )
-      (i32.const -19088752)
     )
   )
   (func $conversions (type $FUNCSIG$v)
@@ -401,12 +403,14 @@
   )
   (func $___syscall_ret (type $FUNCSIG$v)
     (local $$0 i32)
-    (i32.gt_u
-      (i32.shr_u
-        (get_local $$0)
-        (i32.const 0)
+    (drop
+      (i32.gt_u
+        (i32.shr_u
+          (get_local $$0)
+          (i32.const 0)
+        )
+        (i32.const -4096)
       )
-      (i32.const -4096)
     )
   )
   (func $z (type $FUNCSIG$v)
