@@ -1272,11 +1272,7 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
       }
       abort_on("bad unary", ast);
     } else if (what == IF) {
-      auto ret = allocator.alloc<If>();
-      ret->condition = process(ast[1]);
-      ret->ifTrue = process(ast[2]);
-      ret->ifFalse = !!ast[3] ? process(ast[3]) : nullptr;
-      return ret;
+      return builder.makeIf(process(ast[1]), process(ast[2]), !!ast[3] ? process(ast[3]) : nullptr);
     } else if (what == CALL) {
       if (ast[1][0] == NAME) {
         IString name = ast[1][1]->getIString();
@@ -1526,6 +1522,9 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
         if (breakSeeker.found == 0) {
           auto block = allocator.alloc<Block>();
           block->list.push_back(child);
+          if (isConcreteWasmType(child->type)) {
+            block->list.push_back(builder.makeNop()); // ensure a nop at the end, so the block has guaranteed none type and no values fall through
+          }
           block->name = stop;
           block->finalize();
           return block;
