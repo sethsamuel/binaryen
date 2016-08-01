@@ -226,7 +226,8 @@ void test_core() {
 
   // Make the main body of the function. and one block with a return value, one without
   BinaryenExpressionRef value = BinaryenBlock(module, "the-value", valueList, sizeof(valueList) / sizeof(BinaryenExpressionRef));
-  BinaryenExpressionRef nothing = BinaryenBlock(module, "the-nothing", &value, 1);
+  BinaryenExpressionRef droppedValue = BinaryenDrop(module, value);
+  BinaryenExpressionRef nothing = BinaryenBlock(module, "the-nothing", &droppedValue, 1);
   BinaryenExpressionRef bodyList[] = { nothing, makeInt32(module, 42) };
   BinaryenExpressionRef body = BinaryenBlock(module, "the-body", bodyList, 2);
 

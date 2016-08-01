@@ -23,507 +23,509 @@ BinaryenFloat64: 4
     (local $4 i32)
     (block $the-body
       (block $the-nothing
-        (block $the-value
-          (drop
-            (i32.clz
-              (i32.const -10)
-            )
-          )
-          (drop
-            (i64.ctz
-              (i64.const -22)
-            )
-          )
-          (drop
-            (i32.popcnt
-              (i32.const -10)
-            )
-          )
-          (drop
-            (f32.neg
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (f64.abs
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (f32.ceil
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (f64.floor
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (f32.trunc
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (f32.nearest
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (f64.sqrt
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (i32.eqz
-              (i32.const -10)
-            )
-          )
-          (drop
-            (i64.extend_s/i32
-              (i32.const -10)
-            )
-          )
-          (drop
-            (i64.extend_u/i32
-              (i32.const -10)
-            )
-          )
-          (drop
-            (i32.wrap/i64
-              (i64.const -22)
-            )
-          )
-          (drop
-            (i32.trunc_s/f32
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (i64.trunc_s/f32
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (i32.trunc_u/f32
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (i64.trunc_u/f32
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (i32.trunc_s/f64
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (i64.trunc_s/f64
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (i32.trunc_u/f64
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (i64.trunc_u/f64
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (i32.reinterpret/f32
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (i64.reinterpret/f64
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (f32.convert_s/i32
-              (i32.const -10)
-            )
-          )
-          (drop
-            (f64.convert_s/i32
-              (i32.const -10)
-            )
-          )
-          (drop
-            (f32.convert_u/i32
-              (i32.const -10)
-            )
-          )
-          (drop
-            (f64.convert_u/i32
-              (i32.const -10)
-            )
-          )
-          (drop
-            (f32.convert_s/i64
-              (i64.const -22)
-            )
-          )
-          (drop
-            (f64.convert_s/i64
-              (i64.const -22)
-            )
-          )
-          (drop
-            (f32.convert_u/i64
-              (i64.const -22)
-            )
-          )
-          (drop
-            (f64.convert_u/i64
-              (i64.const -22)
-            )
-          )
-          (drop
-            (f64.promote/f32
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (f32.demote/f64
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (f32.reinterpret/i32
-              (i32.const -10)
-            )
-          )
-          (drop
-            (f64.reinterpret/i64
-              (i64.const -22)
-            )
-          )
-          (drop
-            (i32.add
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (f64.sub
-              (f64.const -9005.841)
-              (f64.const -9007.333)
-            )
-          )
-          (drop
-            (i32.div_s
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i64.div_u
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i64.rem_s
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i32.rem_u
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i32.and
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i64.or
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i32.xor
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i64.shl
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i64.shr_u
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i32.shr_s
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i32.rotl
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i64.rotr
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (f32.div
-              (f32.const -33.61199951171875)
-              (f32.const -62.5)
-            )
-          )
-          (drop
-            (f64.copysign
-              (f64.const -9005.841)
-              (f64.const -9007.333)
-            )
-          )
-          (drop
-            (f32.min
-              (f32.const -33.61199951171875)
-              (f32.const -62.5)
-            )
-          )
-          (drop
-            (f64.max
-              (f64.const -9005.841)
-              (f64.const -9007.333)
-            )
-          )
-          (drop
-            (i32.eq
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (f32.ne
-              (f32.const -33.61199951171875)
-              (f32.const -62.5)
-            )
-          )
-          (drop
-            (i32.lt_s
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i64.lt_u
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i64.le_s
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i32.le_u
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i64.gt_s
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i32.gt_u
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i32.ge_s
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i64.ge_u
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (f32.lt
-              (f32.const -33.61199951171875)
-              (f32.const -62.5)
-            )
-          )
-          (drop
-            (f64.le
-              (f64.const -9005.841)
-              (f64.const -9007.333)
-            )
-          )
-          (drop
-            (f64.gt
-              (f64.const -9005.841)
-              (f64.const -9007.333)
-            )
-          )
-          (drop
-            (f32.ge
-              (f32.const -33.61199951171875)
-              (f32.const -62.5)
-            )
-          )
-          (block
-          )
-          (drop
-            (if
-              (i32.const 1)
-              (i32.const 2)
-              (i32.const 3)
-            )
-          )
-          (if
-            (i32.const 4)
-            (i32.const 5)
-          )
-          (drop
-            (loop $out $in
-              (i32.const 0)
-            )
-          )
-          (drop
-            (loop $in2
-              (i32.const 0)
-            )
-          )
-          (drop
-            (loop
-              (i32.const 0)
-            )
-          )
-          (br_if $the-value
-            (i32.const 1)
-            (i32.const 0)
-          )
-          (br_if $the-nothing
-            (i32.const 2)
-          )
-          (br $the-value
-            (i32.const 3)
-          )
-          (br $the-nothing)
-          (br_table $the-value $the-value
-            (i32.const 1)
-            (i32.const 0)
-          )
-          (br_table $the-nothing $the-nothing
-            (i32.const 2)
-          )
-          (drop
-            (i32.eqz
-              (call "$kitchen()sinker"
-                (i32.const 13)
-                (i64.const 37)
-                (f32.const 1.2999999523162842)
-                (f64.const 3.7)
+        (drop
+          (block $the-value
+            (drop
+              (i32.clz
+                (i32.const -10)
               )
             )
-          )
-          (drop
-            (i32.eqz
+            (drop
+              (i64.ctz
+                (i64.const -22)
+              )
+            )
+            (drop
+              (i32.popcnt
+                (i32.const -10)
+              )
+            )
+            (drop
+              (f32.neg
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (f64.abs
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (f32.ceil
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (f64.floor
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (f32.trunc
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (f32.nearest
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (f64.sqrt
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (i32.eqz
+                (i32.const -10)
+              )
+            )
+            (drop
+              (i64.extend_s/i32
+                (i32.const -10)
+              )
+            )
+            (drop
+              (i64.extend_u/i32
+                (i32.const -10)
+              )
+            )
+            (drop
+              (i32.wrap/i64
+                (i64.const -22)
+              )
+            )
+            (drop
               (i32.trunc_s/f32
-                (call_import $an-imported
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (i64.trunc_s/f32
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (i32.trunc_u/f32
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (i64.trunc_u/f32
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (i32.trunc_s/f64
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (i64.trunc_s/f64
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (i32.trunc_u/f64
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (i64.trunc_u/f64
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (i32.reinterpret/f32
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (i64.reinterpret/f64
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (f32.convert_s/i32
+                (i32.const -10)
+              )
+            )
+            (drop
+              (f64.convert_s/i32
+                (i32.const -10)
+              )
+            )
+            (drop
+              (f32.convert_u/i32
+                (i32.const -10)
+              )
+            )
+            (drop
+              (f64.convert_u/i32
+                (i32.const -10)
+              )
+            )
+            (drop
+              (f32.convert_s/i64
+                (i64.const -22)
+              )
+            )
+            (drop
+              (f64.convert_s/i64
+                (i64.const -22)
+              )
+            )
+            (drop
+              (f32.convert_u/i64
+                (i64.const -22)
+              )
+            )
+            (drop
+              (f64.convert_u/i64
+                (i64.const -22)
+              )
+            )
+            (drop
+              (f64.promote/f32
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (f32.demote/f64
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (f32.reinterpret/i32
+                (i32.const -10)
+              )
+            )
+            (drop
+              (f64.reinterpret/i64
+                (i64.const -22)
+              )
+            )
+            (drop
+              (i32.add
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (f64.sub
+                (f64.const -9005.841)
+                (f64.const -9007.333)
+              )
+            )
+            (drop
+              (i32.div_s
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i64.div_u
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i64.rem_s
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i32.rem_u
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i32.and
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i64.or
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i32.xor
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i64.shl
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i64.shr_u
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i32.shr_s
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i32.rotl
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i64.rotr
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (f32.div
+                (f32.const -33.61199951171875)
+                (f32.const -62.5)
+              )
+            )
+            (drop
+              (f64.copysign
+                (f64.const -9005.841)
+                (f64.const -9007.333)
+              )
+            )
+            (drop
+              (f32.min
+                (f32.const -33.61199951171875)
+                (f32.const -62.5)
+              )
+            )
+            (drop
+              (f64.max
+                (f64.const -9005.841)
+                (f64.const -9007.333)
+              )
+            )
+            (drop
+              (i32.eq
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (f32.ne
+                (f32.const -33.61199951171875)
+                (f32.const -62.5)
+              )
+            )
+            (drop
+              (i32.lt_s
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i64.lt_u
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i64.le_s
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i32.le_u
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i64.gt_s
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i32.gt_u
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i32.ge_s
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i64.ge_u
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (f32.lt
+                (f32.const -33.61199951171875)
+                (f32.const -62.5)
+              )
+            )
+            (drop
+              (f64.le
+                (f64.const -9005.841)
+                (f64.const -9007.333)
+              )
+            )
+            (drop
+              (f64.gt
+                (f64.const -9005.841)
+                (f64.const -9007.333)
+              )
+            )
+            (drop
+              (f32.ge
+                (f32.const -33.61199951171875)
+                (f32.const -62.5)
+              )
+            )
+            (block
+            )
+            (drop
+              (if
+                (i32.const 1)
+                (i32.const 2)
+                (i32.const 3)
+              )
+            )
+            (if
+              (i32.const 4)
+              (i32.const 5)
+            )
+            (drop
+              (loop $out $in
+                (i32.const 0)
+              )
+            )
+            (drop
+              (loop $in2
+                (i32.const 0)
+              )
+            )
+            (drop
+              (loop
+                (i32.const 0)
+              )
+            )
+            (br_if $the-value
+              (i32.const 1)
+              (i32.const 0)
+            )
+            (br_if $the-nothing
+              (i32.const 2)
+            )
+            (br $the-value
+              (i32.const 3)
+            )
+            (br $the-nothing)
+            (br_table $the-value $the-value
+              (i32.const 1)
+              (i32.const 0)
+            )
+            (br_table $the-nothing $the-nothing
+              (i32.const 2)
+            )
+            (drop
+              (i32.eqz
+                (call "$kitchen()sinker"
                   (i32.const 13)
+                  (i64.const 37)
+                  (f32.const 1.2999999523162842)
                   (f64.const 3.7)
                 )
               )
             )
-          )
-          (drop
-            (i32.eqz
-              (call_indirect $iiIfF
-                (i32.const 2449)
-                (i32.const 13)
-                (i64.const 37)
-                (f32.const 1.2999999523162842)
-                (f64.const 3.7)
+            (drop
+              (i32.eqz
+                (i32.trunc_s/f32
+                  (call_import $an-imported
+                    (i32.const 13)
+                    (f64.const 3.7)
+                  )
+                )
               )
             )
-          )
-          (drop
-            (get_local $0)
-          )
-          (set_local $0
-            (i32.const 101)
-          )
-          (drop
-            (tee_local $0
-              (i32.const 102)
+            (drop
+              (i32.eqz
+                (call_indirect $iiIfF
+                  (i32.const 2449)
+                  (i32.const 13)
+                  (i64.const 37)
+                  (f32.const 1.2999999523162842)
+                  (f64.const 3.7)
+                )
+              )
             )
-          )
-          (drop
-            (i32.load
-              (i32.const 1)
+            (drop
+              (get_local $0)
             )
-          )
-          (drop
-            (i64.load8_s offset=2 align=4
-              (i32.const 8)
+            (set_local $0
+              (i32.const 101)
             )
-          )
-          (drop
-            (f32.load
-              (i32.const 2)
+            (drop
+              (tee_local $0
+                (i32.const 102)
+              )
             )
-          )
-          (drop
-            (f64.load offset=2
-              (i32.const 9)
+            (drop
+              (i32.load
+                (i32.const 1)
+              )
             )
-          )
-          (i32.store
-            (i32.const 10)
-            (i32.const 11)
-          )
-          (i64.store offset=2 align=4
-            (i32.const 110)
-            (i64.const 111)
-          )
-          (drop
-            (select
-              (i32.const 3)
-              (i32.const 5)
-              (i32.const 1)
+            (drop
+              (i64.load8_s offset=2 align=4
+                (i32.const 8)
+              )
             )
+            (drop
+              (f32.load
+                (i32.const 2)
+              )
+            )
+            (drop
+              (f64.load offset=2
+                (i32.const 9)
+              )
+            )
+            (i32.store
+              (i32.const 10)
+              (i32.const 11)
+            )
+            (i64.store offset=2 align=4
+              (i32.const 110)
+              (i64.const 111)
+            )
+            (drop
+              (select
+                (i32.const 3)
+                (i32.const 5)
+                (i32.const 1)
+              )
+            )
+            (return
+              (i32.const 1337)
+            )
+            (nop)
+            (unreachable)
           )
-          (return
-            (i32.const 1337)
-          )
-          (nop)
-          (unreachable)
         )
       )
       (i32.const 42)
@@ -1549,18 +1551,19 @@ int main() {
     BinaryenExpressionRef children[] = { expressions[30], expressions[32], expressions[34], expressions[36], expressions[38], expressions[40], expressions[42], expressions[44], expressions[46], expressions[48], expressions[50], expressions[52], expressions[54], expressions[56], expressions[58], expressions[60], expressions[62], expressions[64], expressions[66], expressions[68], expressions[70], expressions[72], expressions[74], expressions[76], expressions[78], expressions[80], expressions[82], expressions[84], expressions[86], expressions[88], expressions[90], expressions[92], expressions[94], expressions[96], expressions[98], expressions[100], expressions[103], expressions[106], expressions[109], expressions[112], expressions[115], expressions[118], expressions[121], expressions[124], expressions[127], expressions[130], expressions[133], expressions[136], expressions[139], expressions[142], expressions[145], expressions[148], expressions[151], expressions[154], expressions[157], expressions[160], expressions[163], expressions[166], expressions[169], expressions[172], expressions[175], expressions[178], expressions[181], expressions[184], expressions[187], expressions[190], expressions[193], expressions[196], expressions[197], expressions[198], expressions[199], expressions[201], expressions[203], expressions[205], expressions[206], expressions[208], expressions[210], expressions[211], expressions[212], expressions[214], expressions[216], expressions[219], expressions[222], expressions[224], expressions[226], expressions[229], expressions[231], expressions[233], expressions[235], expressions[237], expressions[238], expressions[239], expressions[240], expressions[242], expressions[243], expressions[244] };
     expressions[245] = BinaryenBlock(the_module, "the-value", children, 96);
   }
+  expressions[246] = BinaryenDrop(the_module, expressions[245]);
   {
-    BinaryenExpressionRef children[] = { expressions[245] };
-    expressions[246] = BinaryenBlock(the_module, "the-nothing", children, 1);
+    BinaryenExpressionRef children[] = { expressions[246] };
+    expressions[247] = BinaryenBlock(the_module, "the-nothing", children, 1);
   }
-  expressions[247] = BinaryenConst(the_module, BinaryenLiteralInt32(42));
+  expressions[248] = BinaryenConst(the_module, BinaryenLiteralInt32(42));
   {
-    BinaryenExpressionRef children[] = { expressions[246], expressions[247] };
-    expressions[248] = BinaryenBlock(the_module, "the-body", children, 2);
+    BinaryenExpressionRef children[] = { expressions[247], expressions[248] };
+    expressions[249] = BinaryenBlock(the_module, "the-body", children, 2);
   }
   {
     BinaryenType varTypes[] = { 1 };
-    functions[0] = BinaryenAddFunction(the_module, "kitchen()sinker", functionTypes[0], varTypes, 1, expressions[248]);
+    functions[0] = BinaryenAddFunction(the_module, "kitchen()sinker", functionTypes[0], varTypes, 1, expressions[249]);
   }
   {
     BinaryenIndex paramTypes[] = { 1, 4 };
@@ -1583,10 +1586,10 @@ int main() {
     BinaryenIndex paramTypes[] = { 0 };
     functionTypes[2] = BinaryenAddFunctionType(the_module, "v", 0, paramTypes, 0);
   }
-  expressions[249] = BinaryenNop(the_module);
+  expressions[250] = BinaryenNop(the_module);
   {
     BinaryenType varTypes[] = { 0 };
-    functions[1] = BinaryenAddFunction(the_module, "starter", functionTypes[2], varTypes, 0, expressions[249]);
+    functions[1] = BinaryenAddFunction(the_module, "starter", functionTypes[2], varTypes, 0, expressions[250]);
   }
   BinaryenSetStart(the_module, functions[1]);
   {
@@ -1613,507 +1616,509 @@ int main() {
     (local $4 i32)
     (block $the-body
       (block $the-nothing
-        (block $the-value
-          (drop
-            (i32.clz
-              (i32.const -10)
-            )
-          )
-          (drop
-            (i64.ctz
-              (i64.const -22)
-            )
-          )
-          (drop
-            (i32.popcnt
-              (i32.const -10)
-            )
-          )
-          (drop
-            (f32.neg
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (f64.abs
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (f32.ceil
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (f64.floor
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (f32.trunc
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (f32.nearest
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (f64.sqrt
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (i32.eqz
-              (i32.const -10)
-            )
-          )
-          (drop
-            (i64.extend_s/i32
-              (i32.const -10)
-            )
-          )
-          (drop
-            (i64.extend_u/i32
-              (i32.const -10)
-            )
-          )
-          (drop
-            (i32.wrap/i64
-              (i64.const -22)
-            )
-          )
-          (drop
-            (i32.trunc_s/f32
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (i64.trunc_s/f32
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (i32.trunc_u/f32
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (i64.trunc_u/f32
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (i32.trunc_s/f64
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (i64.trunc_s/f64
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (i32.trunc_u/f64
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (i64.trunc_u/f64
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (i32.reinterpret/f32
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (i64.reinterpret/f64
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (f32.convert_s/i32
-              (i32.const -10)
-            )
-          )
-          (drop
-            (f64.convert_s/i32
-              (i32.const -10)
-            )
-          )
-          (drop
-            (f32.convert_u/i32
-              (i32.const -10)
-            )
-          )
-          (drop
-            (f64.convert_u/i32
-              (i32.const -10)
-            )
-          )
-          (drop
-            (f32.convert_s/i64
-              (i64.const -22)
-            )
-          )
-          (drop
-            (f64.convert_s/i64
-              (i64.const -22)
-            )
-          )
-          (drop
-            (f32.convert_u/i64
-              (i64.const -22)
-            )
-          )
-          (drop
-            (f64.convert_u/i64
-              (i64.const -22)
-            )
-          )
-          (drop
-            (f64.promote/f32
-              (f32.const -33.61199951171875)
-            )
-          )
-          (drop
-            (f32.demote/f64
-              (f64.const -9005.841)
-            )
-          )
-          (drop
-            (f32.reinterpret/i32
-              (i32.const -10)
-            )
-          )
-          (drop
-            (f64.reinterpret/i64
-              (i64.const -22)
-            )
-          )
-          (drop
-            (i32.add
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (f64.sub
-              (f64.const -9005.841)
-              (f64.const -9007.333)
-            )
-          )
-          (drop
-            (i32.div_s
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i64.div_u
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i64.rem_s
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i32.rem_u
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i32.and
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i64.or
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i32.xor
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i64.shl
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i64.shr_u
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i32.shr_s
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i32.rotl
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i64.rotr
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (f32.div
-              (f32.const -33.61199951171875)
-              (f32.const -62.5)
-            )
-          )
-          (drop
-            (f64.copysign
-              (f64.const -9005.841)
-              (f64.const -9007.333)
-            )
-          )
-          (drop
-            (f32.min
-              (f32.const -33.61199951171875)
-              (f32.const -62.5)
-            )
-          )
-          (drop
-            (f64.max
-              (f64.const -9005.841)
-              (f64.const -9007.333)
-            )
-          )
-          (drop
-            (i32.eq
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (f32.ne
-              (f32.const -33.61199951171875)
-              (f32.const -62.5)
-            )
-          )
-          (drop
-            (i32.lt_s
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i64.lt_u
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i64.le_s
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i32.le_u
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i64.gt_s
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (i32.gt_u
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i32.ge_s
-              (i32.const -10)
-              (i32.const -11)
-            )
-          )
-          (drop
-            (i64.ge_u
-              (i64.const -22)
-              (i64.const -23)
-            )
-          )
-          (drop
-            (f32.lt
-              (f32.const -33.61199951171875)
-              (f32.const -62.5)
-            )
-          )
-          (drop
-            (f64.le
-              (f64.const -9005.841)
-              (f64.const -9007.333)
-            )
-          )
-          (drop
-            (f64.gt
-              (f64.const -9005.841)
-              (f64.const -9007.333)
-            )
-          )
-          (drop
-            (f32.ge
-              (f32.const -33.61199951171875)
-              (f32.const -62.5)
-            )
-          )
-          (block
-          )
-          (drop
-            (if
-              (i32.const 1)
-              (i32.const 2)
-              (i32.const 3)
-            )
-          )
-          (if
-            (i32.const 4)
-            (i32.const 5)
-          )
-          (drop
-            (loop $out $in
-              (i32.const 0)
-            )
-          )
-          (drop
-            (loop $in2
-              (i32.const 0)
-            )
-          )
-          (drop
-            (loop
-              (i32.const 0)
-            )
-          )
-          (br_if $the-value
-            (i32.const 1)
-            (i32.const 0)
-          )
-          (br_if $the-nothing
-            (i32.const 2)
-          )
-          (br $the-value
-            (i32.const 3)
-          )
-          (br $the-nothing)
-          (br_table $the-value $the-value
-            (i32.const 1)
-            (i32.const 0)
-          )
-          (br_table $the-nothing $the-nothing
-            (i32.const 2)
-          )
-          (drop
-            (i32.eqz
-              (call "$kitchen()sinker"
-                (i32.const 13)
-                (i64.const 37)
-                (f32.const 1.2999999523162842)
-                (f64.const 3.7)
+        (drop
+          (block $the-value
+            (drop
+              (i32.clz
+                (i32.const -10)
               )
             )
-          )
-          (drop
-            (i32.eqz
+            (drop
+              (i64.ctz
+                (i64.const -22)
+              )
+            )
+            (drop
+              (i32.popcnt
+                (i32.const -10)
+              )
+            )
+            (drop
+              (f32.neg
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (f64.abs
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (f32.ceil
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (f64.floor
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (f32.trunc
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (f32.nearest
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (f64.sqrt
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (i32.eqz
+                (i32.const -10)
+              )
+            )
+            (drop
+              (i64.extend_s/i32
+                (i32.const -10)
+              )
+            )
+            (drop
+              (i64.extend_u/i32
+                (i32.const -10)
+              )
+            )
+            (drop
+              (i32.wrap/i64
+                (i64.const -22)
+              )
+            )
+            (drop
               (i32.trunc_s/f32
-                (call_import $an-imported
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (i64.trunc_s/f32
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (i32.trunc_u/f32
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (i64.trunc_u/f32
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (i32.trunc_s/f64
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (i64.trunc_s/f64
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (i32.trunc_u/f64
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (i64.trunc_u/f64
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (i32.reinterpret/f32
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (i64.reinterpret/f64
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (f32.convert_s/i32
+                (i32.const -10)
+              )
+            )
+            (drop
+              (f64.convert_s/i32
+                (i32.const -10)
+              )
+            )
+            (drop
+              (f32.convert_u/i32
+                (i32.const -10)
+              )
+            )
+            (drop
+              (f64.convert_u/i32
+                (i32.const -10)
+              )
+            )
+            (drop
+              (f32.convert_s/i64
+                (i64.const -22)
+              )
+            )
+            (drop
+              (f64.convert_s/i64
+                (i64.const -22)
+              )
+            )
+            (drop
+              (f32.convert_u/i64
+                (i64.const -22)
+              )
+            )
+            (drop
+              (f64.convert_u/i64
+                (i64.const -22)
+              )
+            )
+            (drop
+              (f64.promote/f32
+                (f32.const -33.61199951171875)
+              )
+            )
+            (drop
+              (f32.demote/f64
+                (f64.const -9005.841)
+              )
+            )
+            (drop
+              (f32.reinterpret/i32
+                (i32.const -10)
+              )
+            )
+            (drop
+              (f64.reinterpret/i64
+                (i64.const -22)
+              )
+            )
+            (drop
+              (i32.add
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (f64.sub
+                (f64.const -9005.841)
+                (f64.const -9007.333)
+              )
+            )
+            (drop
+              (i32.div_s
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i64.div_u
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i64.rem_s
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i32.rem_u
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i32.and
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i64.or
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i32.xor
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i64.shl
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i64.shr_u
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i32.shr_s
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i32.rotl
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i64.rotr
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (f32.div
+                (f32.const -33.61199951171875)
+                (f32.const -62.5)
+              )
+            )
+            (drop
+              (f64.copysign
+                (f64.const -9005.841)
+                (f64.const -9007.333)
+              )
+            )
+            (drop
+              (f32.min
+                (f32.const -33.61199951171875)
+                (f32.const -62.5)
+              )
+            )
+            (drop
+              (f64.max
+                (f64.const -9005.841)
+                (f64.const -9007.333)
+              )
+            )
+            (drop
+              (i32.eq
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (f32.ne
+                (f32.const -33.61199951171875)
+                (f32.const -62.5)
+              )
+            )
+            (drop
+              (i32.lt_s
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i64.lt_u
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i64.le_s
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i32.le_u
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i64.gt_s
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (i32.gt_u
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i32.ge_s
+                (i32.const -10)
+                (i32.const -11)
+              )
+            )
+            (drop
+              (i64.ge_u
+                (i64.const -22)
+                (i64.const -23)
+              )
+            )
+            (drop
+              (f32.lt
+                (f32.const -33.61199951171875)
+                (f32.const -62.5)
+              )
+            )
+            (drop
+              (f64.le
+                (f64.const -9005.841)
+                (f64.const -9007.333)
+              )
+            )
+            (drop
+              (f64.gt
+                (f64.const -9005.841)
+                (f64.const -9007.333)
+              )
+            )
+            (drop
+              (f32.ge
+                (f32.const -33.61199951171875)
+                (f32.const -62.5)
+              )
+            )
+            (block
+            )
+            (drop
+              (if
+                (i32.const 1)
+                (i32.const 2)
+                (i32.const 3)
+              )
+            )
+            (if
+              (i32.const 4)
+              (i32.const 5)
+            )
+            (drop
+              (loop $out $in
+                (i32.const 0)
+              )
+            )
+            (drop
+              (loop $in2
+                (i32.const 0)
+              )
+            )
+            (drop
+              (loop
+                (i32.const 0)
+              )
+            )
+            (br_if $the-value
+              (i32.const 1)
+              (i32.const 0)
+            )
+            (br_if $the-nothing
+              (i32.const 2)
+            )
+            (br $the-value
+              (i32.const 3)
+            )
+            (br $the-nothing)
+            (br_table $the-value $the-value
+              (i32.const 1)
+              (i32.const 0)
+            )
+            (br_table $the-nothing $the-nothing
+              (i32.const 2)
+            )
+            (drop
+              (i32.eqz
+                (call "$kitchen()sinker"
                   (i32.const 13)
+                  (i64.const 37)
+                  (f32.const 1.2999999523162842)
                   (f64.const 3.7)
                 )
               )
             )
-          )
-          (drop
-            (i32.eqz
-              (call_indirect $iiIfF
-                (i32.const 2449)
-                (i32.const 13)
-                (i64.const 37)
-                (f32.const 1.2999999523162842)
-                (f64.const 3.7)
+            (drop
+              (i32.eqz
+                (i32.trunc_s/f32
+                  (call_import $an-imported
+                    (i32.const 13)
+                    (f64.const 3.7)
+                  )
+                )
               )
             )
-          )
-          (drop
-            (get_local $0)
-          )
-          (set_local $0
-            (i32.const 101)
-          )
-          (drop
-            (tee_local $0
-              (i32.const 102)
+            (drop
+              (i32.eqz
+                (call_indirect $iiIfF
+                  (i32.const 2449)
+                  (i32.const 13)
+                  (i64.const 37)
+                  (f32.const 1.2999999523162842)
+                  (f64.const 3.7)
+                )
+              )
             )
-          )
-          (drop
-            (i32.load
-              (i32.const 1)
+            (drop
+              (get_local $0)
             )
-          )
-          (drop
-            (i64.load8_s offset=2 align=4
-              (i32.const 8)
+            (set_local $0
+              (i32.const 101)
             )
-          )
-          (drop
-            (f32.load
-              (i32.const 2)
+            (drop
+              (tee_local $0
+                (i32.const 102)
+              )
             )
-          )
-          (drop
-            (f64.load offset=2
-              (i32.const 9)
+            (drop
+              (i32.load
+                (i32.const 1)
+              )
             )
-          )
-          (i32.store
-            (i32.const 10)
-            (i32.const 11)
-          )
-          (i64.store offset=2 align=4
-            (i32.const 110)
-            (i64.const 111)
-          )
-          (drop
-            (select
-              (i32.const 3)
-              (i32.const 5)
-              (i32.const 1)
+            (drop
+              (i64.load8_s offset=2 align=4
+                (i32.const 8)
+              )
             )
+            (drop
+              (f32.load
+                (i32.const 2)
+              )
+            )
+            (drop
+              (f64.load offset=2
+                (i32.const 9)
+              )
+            )
+            (i32.store
+              (i32.const 10)
+              (i32.const 11)
+            )
+            (i64.store offset=2 align=4
+              (i32.const 110)
+              (i64.const 111)
+            )
+            (drop
+              (select
+                (i32.const 3)
+                (i32.const 5)
+                (i32.const 1)
+              )
+            )
+            (return
+              (i32.const 1337)
+            )
+            (nop)
+            (unreachable)
           )
-          (return
-            (i32.const 1337)
-          )
-          (nop)
-          (unreachable)
         )
       )
       (i32.const 42)
