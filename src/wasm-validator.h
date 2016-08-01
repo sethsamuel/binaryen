@@ -60,17 +60,18 @@ public:
     // if we are break'ed to, then the value must be right for us
     if (curr->name.is()) {
       if (breakInfos.count(curr) > 0) {
+        auto& info = breakInfos[curr];
         // none or unreachable means a poison value that we should ignore - if consumed, it will error
-        if (isConcreteWasmType(breakInfos[curr].type) && isConcreteWasmType(curr->type)) {
-          shouldBeEqual(curr->type, breakInfos[curr].type, curr, "block+breaks must have right type if breaks return a value");
+        if (isConcreteWasmType(info.type) && isConcreteWasmType(curr->type)) {
+          shouldBeEqual(curr->type, info.type, curr, "block+breaks must have right type if breaks return a value");
         }
+        shouldBeTrue(info.arity != Index(-1), curr, "break arities must match");
         if (curr->list.size() > 0) {
           auto last = curr->list.back()->type;
-          if (isConcreteWasmType(last) && breakInfos[curr].type != unreachable) {
-            shouldBeEqual(last, breakInfos[curr].type, curr, "block+breaks must have right type if block ends with a reachable value");
+          if (isConcreteWasmType(last) && info.type != unreachable) {
+            shouldBeEqual(last, info.type, curr, "block+breaks must have right type if block ends with a reachable value");
           }
         }
-        shouldBeTrue(breakInfos[curr].arity != Index(-1), curr, "break arities must match");
       }
       breakTargets[curr->name].pop_back();
     }
