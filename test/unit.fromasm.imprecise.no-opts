@@ -413,6 +413,7 @@
       )
     )
     (call_indirect $FUNCSIG$vf
+      (get_local $x)
       (i32.add
         (i32.and
           (i32.const 1)
@@ -420,11 +421,11 @@
         )
         (i32.const 8)
       )
-      (get_local $x)
     )
   )
   (func $cneg (param $x f32)
     (call_indirect $FUNCSIG$vf
+      (get_local $x)
       (i32.add
         (i32.and
           (i32.const 1)
@@ -432,7 +433,6 @@
         )
         (i32.const 8)
       )
-      (get_local $x)
     )
   )
   (func $___syscall_ret
@@ -477,6 +477,7 @@
   )
   (func $cneg_nosemicolon
     (call_indirect $FUNCSIG$vi
+      (i32.const 1)
       (i32.add
         (i32.and
           (i32.const 1)
@@ -484,7 +485,6 @@
         )
         (i32.const 8)
       )
-      (i32.const 1)
     )
   )
   (func $forLoop
