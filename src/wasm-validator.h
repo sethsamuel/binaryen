@@ -71,6 +71,9 @@ public:
           if (isConcreteWasmType(last) && info.type != unreachable) {
             shouldBeEqual(last, info.type, curr, "block+breaks must have right type if block ends with a reachable value");
           }
+          if (last == none) {
+            shouldBeTrue(info.arity == Index(0), curr, "if block ends with a none, breaks cannot send a value of any type");
+          }
         }
       }
       breakTargets[curr->name].pop_back();
