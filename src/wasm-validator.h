@@ -89,16 +89,12 @@ public:
 
   static void visitPreLoop(WasmValidator* self, Expression** currp) {
     auto* curr = (*currp)->cast<Loop>();
-    if (curr->in.is()) self->breakTargets[curr->in].push_back(curr);
-    if (curr->out.is()) self->breakTargets[curr->out].push_back(curr);
+    if (curr->name.is()) self->breakTargets[curr->name].push_back(curr);
   }
 
   void visitLoop(Loop *curr) {
-    if (curr->in.is()) {
-      breakTargets[curr->in].pop_back();
-    }
-    if (curr->out.is()) {
-      breakTargets[curr->out].pop_back();
+    if (curr->name.is()) {
+      breakTargets[curr->name].pop_back();
     }
   }
 

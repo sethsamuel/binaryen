@@ -1473,8 +1473,7 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
         out = getNextId("while-out");
         in = getNextId("while-in");
       }
-      ret->out = out;
-      ret->in = in;
+      ret->name = in;
       breakStack.push_back(out);
       continueStack.push_back(in);
       if (forever) {
@@ -1492,9 +1491,9 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
         ret->body = body;
       }
       // loops do not automatically loop, add a branch back
-      Block* block = blockify(ret->body);
+      Block* block = builder.blockifyWithName(ret->body, out);
       auto continuer = allocator.alloc<Break>();
-      continuer->name = ret->in;
+      continuer->name = ret->name;
       block->list.push_back(continuer);
       ret->body = block;
       continueStack.pop_back();
@@ -1531,13 +1530,12 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
         } else {
           auto loop = allocator.alloc<Loop>();
           loop->body = child;
-          loop->out = stop;
-          loop->in = more;
-          return loop;
+          loop->name = more;
+          return builder.blockifyWithName(loop, stop);
         }
       }
       // general do-while loop
-      auto ret = allocator.alloc<Loop>();
+      auto loop = allocator.alloc<Loop>();
       IString out, in;
       if (!parentLabel.isNull()) {
         out = getBreakLabelName(parentLabel);
@@ -1547,20 +1545,18 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
         out = getNextId("do-out");
         in = getNextId("do-in");
       }
-      ret->out = out;
-      ret->in = in;
+      loop->name = in;
       breakStack.push_back(out);
       continueStack.push_back(in);
-      ret->body = process(ast[2]);
+      loop->body = process(ast[2]);
       continueStack.pop_back();
       breakStack.pop_back();
       Break *continuer = allocator.alloc<Break>();
       continuer->name = in;
       continuer->condition = process(ast[1]);
-      Block *block = blockify(ret->body);
-      block->list.push_back(continuer);
-      ret->body = block;
-      return ret;
+      Block *block = builder.blockifyWithName(loop->body, out, continuer);
+      loop->body = block;
+      return loop;
     } else if (what == FOR) {
       Ref finit = ast[1],
           fcond = ast[2],
@@ -1576,8 +1572,7 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
         out = getNextId("for-out");
         in = getNextId("for-in");
       }
-      ret->out = out;
-      ret->in = in;
+      ret->name = in;
       breakStack.push_back(out);
       continueStack.push_back(in);
       Break *breakOut = allocator.alloc<Break>();
@@ -1592,10 +1587,9 @@ Function* Asm2WasmBuilder::processFunction(Ref ast) {
       body->finalize();
       ret->body = body;
       // loops do not automatically loop, add a branch back
-      Block* block = blockify(ret->body);
       auto continuer = allocator.alloc<Break>();
-      continuer->name = ret->in;
-      block->list.push_back(continuer);
+      continuer->name = ret->name;
+      Block* block = builder.blockifyWithName(ret->body, out, continuer);
       ret->body = block;
       continueStack.pop_back();
       breakStack.pop_back();

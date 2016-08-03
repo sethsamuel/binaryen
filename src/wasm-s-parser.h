@@ -1169,22 +1169,14 @@ private:
   Expression* makeLoop(Element& s) {
     auto ret = allocator.alloc<Loop>();
     size_t i = 1;
-    if (s.size() > i + 1 && s[i]->isStr() && s[i + 1]->isStr()) { // out can only be named if both are
-      ret->out = s[i]->str();
-      i++;
-    } else {
-      ret->out = getPrefixedName("loop-out");
-    }
     if (s.size() > i && s[i]->isStr()) {
-      ret->in = s[i]->str();
+      ret->name = s[i]->str();
       i++;
     } else {
-      ret->in = getPrefixedName("loop-in");
+      ret->name = getPrefixedName("loop-in");
     }
-    labelStack.push_back(ret->out);
-    labelStack.push_back(ret->in);
+    labelStack.push_back(ret->name);
     ret->body = makeMaybeBlock(s, i);
-    labelStack.pop_back();
     labelStack.pop_back();
     ret->finalize();
     return ret;
