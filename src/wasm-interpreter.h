@@ -669,11 +669,11 @@ private:
       }
       Flow visitCallIndirect(CallIndirect *curr) {
         NOTE_ENTER("CallIndirect");
-        Flow target = visit(curr->target);
-        if (target.breaking()) return target;
         LiteralList arguments;
         Flow flow = generateArguments(curr->operands, arguments);
         if (flow.breaking()) return flow;
+        Flow target = visit(curr->target);
+        if (target.breaking()) return target;
         size_t index = target.value.geti32();
         if (index >= instance.wasm.table.names.size()) trap("callIndirect: overflow");
         Name name = instance.wasm.table.names[index];
