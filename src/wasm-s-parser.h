@@ -1169,6 +1169,11 @@ private:
   Expression* makeLoop(Element& s) {
     auto ret = allocator.alloc<Loop>();
     size_t i = 1;
+    Name out;
+    if (s.size() > i + 1 && s[i]->isStr() && s[i + 1]->isStr()) { // out can only be named if both are
+      out = s[i]->str();
+      i++;
+    }
     if (s.size() > i && s[i]->isStr()) {
       ret->name = s[i]->str();
       i++;
@@ -1179,6 +1184,13 @@ private:
     ret->body = makeMaybeBlock(s, i);
     labelStack.pop_back();
     ret->finalize();
+    if (out.is()) {
+      auto* block = allocator.alloc<Block>();
+      block->name = out;
+      block->list.push_back(ret);
+      block->finalize();
+      return block;
+    }
     return ret;
   }
 
