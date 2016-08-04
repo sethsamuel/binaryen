@@ -137,7 +137,10 @@ struct MergeBlocks : public WalkerPass<PostWalker<MergeBlocks, Visitor<MergeBloc
                 // reuse the drop
                 drop->value = child->list.back();
                 child->list.back() = drop;
+                child->finalize();
                 curr->list[i] = child;
+                more = true;
+                changed = true;
               }
             }
           }

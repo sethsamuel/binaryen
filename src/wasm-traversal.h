@@ -467,7 +467,7 @@ struct ControlFlowWalker : public PostWalker<SubType, VisitorType> {
       } else {
         WASM_UNREACHABLE();
       }
-      assert(i > 0); // we must find the target
+      if (i == 0) return nullptr;
       i--;
     }
   }

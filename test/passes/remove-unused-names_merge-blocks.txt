@@ -692,4 +692,68 @@
       (nop)
     )
   )
+  (func $drop-br-values (type $3)
+    (local $x i32)
+    (set_local $x
+      (block $out1
+        (drop
+          (block $out2
+            (br_table $out1 $out2
+              (i32.const 0)
+              (i32.const 1)
+            )
+            (br $out2
+              (i32.const 2)
+            )
+          )
+        )
+        (i32.const -3)
+      )
+    )
+    (set_local $x
+      (block $out1
+        (drop
+          (block $out2
+            (br_table $out2 $out1
+              (i32.const 3)
+              (i32.const 4)
+            )
+            (br $out2
+              (i32.const 5)
+            )
+          )
+        )
+        (i32.const -2)
+      )
+    )
+    (set_local $x
+      (block $out1
+        (block $out2
+          (br_table $out1 $out1
+            (i32.const 6)
+            (i32.const 7)
+          )
+          (drop
+            (block
+              (drop
+                (i32.const 8)
+              )
+              (br $out2)
+            )
+          )
+        )
+        (i32.const -1)
+      )
+    )
+    (block $out2
+      (drop
+        (block
+          (drop
+            (i32.const 9)
+          )
+          (br $out2)
+        )
+      )
+    )
+  )
 )
