@@ -95,6 +95,10 @@ public:
   void visitLoop(Loop *curr) {
     if (curr->name.is()) {
       breakTargets[curr->name].pop_back();
+      if (breakInfos.count(curr) > 0) {
+        auto& info = breakInfos[curr];
+        shouldBeEqual(info.arity, Index(0), curr, "breaks to a loop cannot pass a value");
+      }
     }
   }
 
