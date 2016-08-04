@@ -868,4 +868,65 @@
       (nop)
     )
   )
+  (func $drop-br-values
+    (local $x i32)
+    (set_local $x
+      (block $out1
+        (drop
+          (block $out2
+            (br_table $out1 $out2 ;; can't get rid of outer drop on block - the switch prevents us
+              (i32.const 0)
+              (i32.const 1)
+            )
+            (br $out2
+              (i32.const 2)
+            )
+          )
+        )
+        (i32.const -3)
+      )
+    )
+    (set_local $x
+      (block $out1
+        (drop
+          (block $out2
+            (br_table $out2 $out1 ;; can't get rid of outer drop on block - the switch prevents us
+              (i32.const 3)
+              (i32.const 4)
+            )
+            (br $out2
+              (i32.const 5)
+            )
+          )
+        )
+        (i32.const -2)
+      )
+    )
+    (set_local $x
+      (block $out1
+        (drop
+          (block $out2
+            (br_table $out1 $out1 ;; now we can
+              (i32.const 6)
+              (i32.const 7)
+            )
+            (br $out2
+              (i32.const 8)
+            )
+          )
+        )
+        (i32.const -1)
+      )
+    )
+    (block $out1
+      (drop
+        (block $out2
+          (br $out2
+            (i32.const 9)
+          )
+        )
+      )
+    )
+  )
 )
+;; TODO: check that we have a test for breaks getting dropped, a switch with and without us as our target, default and target
