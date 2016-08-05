@@ -358,7 +358,7 @@ for t in tests:
 
     binary_format_check(t)
     minify_check(t)
-'''
+
 print '\n[ checking wasm-shell spec testcases... ]\n'
 
 if len(requested) == 0:
@@ -423,7 +423,7 @@ for t in spec_tests:
         actual += run_spec_test(result_wast)
       # compare all the outputs to the expected output
       check_expected(actual, os.path.join('test', 'spec', 'expected-output', os.path.basename(wast) + '.log'))
-'''
+
 ''' XXX disable wasm2asm for now, too much flux
 print '\n[ checking wasm2asm testcases... ]\n'
 
