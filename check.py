@@ -552,7 +552,7 @@ cmd = [wasm_as, '--validate=none', os.path.join('test', 'validator', 'invalid_re
 run_command(cmd)
 '''
 
-if torture:
+if torture and 0:
 
   print '\n[ checking torture testcases... ]\n'
 
