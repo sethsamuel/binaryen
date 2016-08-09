@@ -358,7 +358,7 @@ for t in tests:
 
     binary_format_check(t)
     minify_check(t)
-'''
+
 print '\n[ checking wasm-shell spec testcases... ]\n'
 
 if len(requested) == 0:
@@ -373,8 +373,15 @@ for t in spec_tests:
     wast = os.path.join('test', t)
 
     def run_spec_test(wast):
-      print '       run wasm-shell on', wast
       cmd = [os.path.join('bin', 'wasm-shell'), wast]
+      # we must skip the stack machine portions of spec tests or apply other extra args
+      extra = {
+        'call.wast': ['--skip=207'],
+        'call_indirect.wast': ['--skip=263'],
+        'nop.wast': ['--skip=3'],
+        'stack.wast': ['--skip=0'],
+      }
+      cmd = cmd + (extra.get(os.path.basename(wast)) or [])
       return run_command(cmd, stderr=subprocess.PIPE)
 
     def check_expected(actual, expected):
@@ -408,11 +415,24 @@ for t in spec_tests:
 
     check_expected(actual, expected)
 
+    # we must ignore some binary format splits
+    splits_to_skip = {
+      'call.wast': [1],
+      'call_indirect.wast': [1],
+      'nop.wast': [0],
+      'stack.wast': [0],
+    }
+
     # check binary format. here we can verify execution of the final result, no need for an output verification
     split_num = 0
-    if os.path.basename(wast) not in ['call_indirect.wast']: # avoid some tests with things still being sorted out in the spec https://github.com/WebAssembly/spec/pull/301
+    if os.path.basename(wast) not in []: # avoid some tests with things still being sorted out in the spec
       actual = ''
       for module, asserts in split_wast(wast):
+        skip = splits_to_skip.get(os.path.basename(wast)) or []
+        if split_num in skip:
+          print '    skipping split module', split_num - 1
+          split_num += 1
+          continue
         print '    testing split module', split_num
         split_num += 1
         with open('split.wast', 'w') as o: o.write(module + '\n' + '\n'.join(asserts))
@@ -423,7 +443,7 @@ for t in spec_tests:
         actual += run_spec_test(result_wast)
       # compare all the outputs to the expected output
       check_expected(actual, os.path.join('test', 'spec', 'expected-output', os.path.basename(wast) + '.log'))
-'''
+
 ''' XXX disable wasm2asm for now, too much flux
 print '\n[ checking wasm2asm testcases... ]\n'
 
