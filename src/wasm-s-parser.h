@@ -1467,6 +1467,7 @@ private:
       }
     }
     im->type = ensureFunctionType(getSig(type.get()), &wasm);
+    im->kind = Import::Function;
     wasm.addImport(im.release());
   }
 

@@ -1498,6 +1498,7 @@ public:
       assert(curr->type->name.is());
       curr->module = getInlineString();
       curr->base = getInlineString();
+      curr->kind = Import::Function;
       wasm.addImport(curr);
     }
   }
